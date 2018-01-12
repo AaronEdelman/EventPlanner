@@ -20,6 +20,13 @@ namespace EventPlanner.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Entertainment> Entertainments { get; set; }
+        public DbSet<Venue> Venues { get; set; }
+        public DbSet<EntertainmentPreference> EntertainmentPreferences { get; set; }
+        public DbSet <Group> Groups { get; set; }
+        public DbSet<UserToGroup> UserToGroups { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

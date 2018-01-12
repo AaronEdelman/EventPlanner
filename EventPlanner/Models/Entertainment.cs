@@ -18,11 +18,11 @@ namespace EventPlanner.Models
         public DateTime EndDate { get; set; }
         public string Restriction { get; set; }
 
-        public string VenueId { get; set; }
+        public int VenueId { get; set; }
         [ForeignKey("VenueId")]
         public Venue Venue { get; set; }
 
-        public string EventId { get; set; }
+        public int EventId { get; set; }
         [ForeignKey("EventId")]
         public Event Event { get; set; }
     }

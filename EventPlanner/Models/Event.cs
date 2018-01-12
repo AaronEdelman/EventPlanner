@@ -10,7 +10,7 @@ namespace EventPlanner.Models
     public class Event
     {
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -19,7 +19,7 @@ namespace EventPlanner.Models
         public int Cost { get; set; }
         public string Weblink { get; set; }
 
-        public string AddressId { get; set; }
+        public int AddressId { get; set; }
         [ForeignKey("AddressId")]
         public Address Address { get; set; }
     }

@@ -14,7 +14,7 @@ namespace EventPlanner.Models
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }
 
-        public string GroupId { get; set; }
+        public int GroupId { get; set; }
         [ForeignKey("GroupId")]
         public Group Group { get; set; }
     }

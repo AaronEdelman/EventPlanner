@@ -17,11 +17,11 @@ namespace EventPlanner.Models
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }
 
-        public string GroupId { get; set; }
+        public int GroupId { get; set; }
         [ForeignKey("GroupId")]
         public Group Group { get; set; }
 
-        public string EntertainmentId { get; set; }
+        public int EntertainmentId { get; set; }
         [ForeignKey("EntertainmentId")]
         public Entertainment Entertainment { get; set; }
     }
