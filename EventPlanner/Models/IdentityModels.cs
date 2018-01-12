@@ -1,4 +1,4 @@
-﻿using System.Data.Entity;
+﻿ using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -25,7 +25,7 @@ namespace EventPlanner.Models
         public DbSet<Entertainment> Entertainments { get; set; }
         public DbSet<Venue> Venues { get; set; }
         public DbSet<EntertainmentPreference> EntertainmentPreferences { get; set; }
-        public DbSet <Group> Groups { get; set; }
+        public DbSet<Group> Groups { get; set; }
         public DbSet<UserToGroup> UserToGroups { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

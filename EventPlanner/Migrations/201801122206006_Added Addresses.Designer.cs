@@ -7,13 +7,13 @@ namespace EventPlanner.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class MigratedEntertainmentPreferencesGroupsandUserToGroups : IMigrationMetadata
+    public sealed partial class AddedAddresses : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(MigratedEntertainmentPreferencesGroupsandUserToGroups));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedAddresses));
         
         string IMigrationMetadata.Id
         {
-            get { return "201801122110591_Migrated EntertainmentPreferences, Groups, and UserToGroups"; }
+            get { return "201801122206006_Added Addresses"; }
         }
         
         string IMigrationMetadata.Source
