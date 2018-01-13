@@ -10,6 +10,7 @@ namespace EventPlanner.Models
     {
         [Key]
         public int Id { get; set; }
+        [Display(Name = "Group")]
         public string Name { get; set; }
     }
 }
