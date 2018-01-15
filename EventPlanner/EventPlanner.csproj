@@ -212,6 +212,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\AttendeeViewModels.cs" />
     <Compile Include="Models\Entertainment.cs" />
     <Compile Include="Models\EntertainmentPreference.cs" />
     <Compile Include="Models\Event.cs" />
@@ -286,7 +287,7 @@
     <Content Include="Views\Promoter\Details.cshtml" />
     <Content Include="Views\Promoter\Edit.cshtml" />
     <Content Include="Views\Promoter\Index.cshtml" />
-    <Content Include="Views\Attendee\Create.cshtml" />
+    <Content Include="Views\Attendee\CreateOG.cshtml" />
     <Content Include="Views\Attendee\Delete.cshtml" />
     <Content Include="Views\Attendee\Details.cshtml" />
     <Content Include="Views\Attendee\Edit.cshtml" />
@@ -300,6 +301,7 @@
     <Content Include="Views\Events\Edit.cshtml" />
     <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\Promoter\CreateVenue.cshtml" />
+    <Content Include="Views\Attendee\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

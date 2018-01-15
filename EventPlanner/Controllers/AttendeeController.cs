@@ -49,18 +49,22 @@ namespace EventPlanner.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,UserId,GroupId")] UserToGroup userToGroup)
+        public ActionResult Create(GroupCreateViewModel model)
+        //public ActionResult Create([Bind(Include = "Id,UserId,GroupId")] UserToGroup userToGroup)
         {
             if (ModelState.IsValid)
             {
-                db.UserToGroups.Add(userToGroup);
+                var newGroup = new Group{ Name = model.Name };
+                var newUserToGroup = new UserToGroup { UserId = model.UserId, GroupId = newGroup.Id };
+                db.Groups.Add(newGroup);
+                db.UserToGroups.Add(newUserToGroup);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name", userToGroup.GroupId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email", userToGroup.UserId);
-            return View(userToGroup);
+            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name");
+            ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
+            return View();
         }
 
         // GET: Attendee/Edit/5
