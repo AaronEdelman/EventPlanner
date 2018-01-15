@@ -193,6 +193,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AttendeeController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PromoterController.cs" />
@@ -290,6 +291,15 @@
     <Content Include="Views\Attendee\Details.cshtml" />
     <Content Include="Views\Attendee\Edit.cshtml" />
     <Content Include="Views\Attendee\Index.cshtml" />
+    <Content Include="Views\Promoter\Events.cshtml" />
+    <Content Include="Views\Promoter\MyInfo.cshtml" />
+    <Content Include="Views\Promoter\CreateEvent.cshtml" />
+    <Content Include="Views\Events\Create.cshtml" />
+    <Content Include="Views\Events\Delete.cshtml" />
+    <Content Include="Views\Events\Details.cshtml" />
+    <Content Include="Views\Events\Edit.cshtml" />
+    <Content Include="Views\Events\Index.cshtml" />
+    <Content Include="Views\Promoter\CreateVenue.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
