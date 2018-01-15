@@ -1,0 +1,24 @@
+﻿@using Microsoft.AspNet.Identity
+<a class="menu-toggle rounded" href="#">
+    <i class="fa fa-bars"></i>
+</a>
+<nav id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <li class="sidebar-brand">
+            @Html.ActionLink("Home", "Index", "Home")
+            Make this 
+        </li>
+        <li class="sidebar-nav-item">
+            @Html.ActionLink("Search", "", "")
+        </li>
+        <li class="sidebar-nav-item">
+            @Html.ActionLink("Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        </li>
+        <li class="sidebar-nav-item">
+            @Html.ActionLink("My Events", "Events", "")
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a><
+        </li>
+    </ul>
+</nav>
