@@ -190,7 +190,28 @@ namespace EventPlanner.Controllers
             
             return View(newEvent);
         }
-
+        //GET: Promoter/View_Venues_Shows
+        public ActionResult View_Venues(int Id)
+        {
+            var venue_entertainment = new Venue_Entertainment();
+            venue_entertainment.venues = new List<Venue>();
+            venue_entertainment.entertainment = new List<Entertainment>();
+            foreach (Venue venue in db.Venues)
+            {
+                if (venue.EventId == Id)
+                {
+                    venue_entertainment.venues.Add(venue);
+                }
+            }
+            foreach (Entertainment show in db.Entertainments)
+            {
+                if (show.EventId == Id)
+                {
+                    venue_entertainment.entertainment.Add(show);
+                }
+            }
+            return View(venue_entertainment);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
