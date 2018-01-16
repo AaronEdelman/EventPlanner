@@ -235,8 +235,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\eventBlurredCrowd.jpg" />
-    <Content Include="Images\HomePicture.jpg" />
+    <Content Include="Images\eventBlurredCrowd.png" />
+    <Content Include="Images\stars.gif" />
+    <Content Include="Images\starBackGround.jpg" />
+    <Content Include="Images\stars.jpg" />
+    <Content Include="Images\violetNightSkty.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
