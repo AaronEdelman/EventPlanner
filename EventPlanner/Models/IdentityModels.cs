@@ -20,6 +20,7 @@ namespace EventPlanner.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<GroupToEvents> GroupToEvents { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Entertainment> Entertainments { get; set; }

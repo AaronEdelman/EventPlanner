@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EventPlanner.Models;
+using Microsoft.AspNet.Identity;
 
 namespace EventPlanner.Controllers
 {
@@ -17,8 +18,39 @@ namespace EventPlanner.Controllers
         // GET: Attendee
         public ActionResult Index()
         {
-            var userToGroups = db.UserToGroups.Include(u => u.Group).Include(u => u.User);
-            return View(userToGroups.ToList());
+            var AttendeeGroupModel = new AttendeeGroupViewModel();
+            var currentUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var groups = (from x in db.UserToGroups where x.UserId == currentUserId select x.Group).ToList();
+            AttendeeGroupModel.CurrentGroups = groups;
+            AttendeeGroupModel.User = db.Users.Find(currentUserId);
+            foreach(ApplicationUser user in db.Users)
+            {
+                if (user.Id == currentUserId)
+                {
+                    AttendeeGroupModel.User = user;
+                }
+            }
+            return View(AttendeeGroupModel);
+        }
+
+        public ActionResult RemoveMemberFromGroup(string userId, int groupId)
+        {
+            var idToSearch = (from row in db.UserToGroups where row.UserId == userId && row.GroupId == groupId select row.Id);
+            var UserToGroupToRemove = db.UserToGroups.Find(idToSearch);
+            db.UserToGroups.Remove(UserToGroupToRemove);
+            db.SaveChanges();
+            return View();
+
+        }
+
+        public ActionResult RemoveEventFromGroup(int eventId, int groupId)
+        {
+            var idToSearch = (from row in db.GroupToEvents where row.EventId == eventId && row.GroupId == groupId select row.Id);
+            var GroupToEventsToRemove = db.GroupToEvents.Find(idToSearch);
+            db.GroupToEvents.Remove(GroupToEventsToRemove);
+            db.SaveChanges();
+            return View();
+
         }
 
         // GET: Attendee/Details/5
@@ -28,12 +60,15 @@ namespace EventPlanner.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserToGroup userToGroup = db.UserToGroups.Find(id);
-            if (userToGroup == null)
-            {
-                return HttpNotFound();
-            }
-            return View(userToGroup);
+            GroupToEventsViewModel GroupToEvents = new GroupToEventsViewModel();
+            Group Group = db.Groups.Find(id);            
+            var users = (from row in db.UserToGroups where row.GroupId == id select row.User).ToList();
+            var events = (from row in db.GroupToEvents where row.GroupId == id select row.Event).ToList();
+            GroupToEvents.Group = Group;
+            GroupToEvents.CurrentUsers = users;
+            GroupToEvents.Events = events;
+
+            return View(GroupToEvents);
         }
 
         // GET: Attendee/Create
@@ -74,14 +109,20 @@ namespace EventPlanner.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserToGroup userToGroup = db.UserToGroups.Find(id);
-            if (userToGroup == null)
+            else
             {
-                return HttpNotFound();
-            }
-            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name", userToGroup.GroupId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email", userToGroup.UserId);
-            return View(userToGroup);
+                var GroupToAttendees = new GroupToAttendeesViewModel();
+                foreach(Group group in db.Groups)
+                {
+                    if(group.Id == id)
+                    {
+                        GroupToAttendees.Group = group;
+                    }
+                }
+                var currentUsers = (from row in db.UserToGroups where row.GroupId == id select row.User).ToList();
+                GroupToAttendees.CurrentUsers = currentUsers;
+                return View(GroupToAttendees);
+            }            
         }
 
         // POST: Attendee/Edit/5
@@ -89,11 +130,14 @@ namespace EventPlanner.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserId,GroupId")] UserToGroup userToGroup)
+        public ActionResult Edit(GroupEditViewModel model, UserToGroup userToGroup, int? id)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(userToGroup).State = EntityState.Modified;
+                var groupToUpdate = db.Groups.Find(db.UserToGroups.Find(userToGroup.Id).GroupId);
+                var userToGroupToUpdate = db.UserToGroups.Find(userToGroup.Id);
+                userToGroupToUpdate.GroupId = groupToUpdate.Id;
+                groupToUpdate.Name = model.Name;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

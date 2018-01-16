@@ -18,4 +18,16 @@ namespace EventPlanner.Models
         public string Name { get; set; }
 
     }
+
+    public class GroupEditViewModel
+    {
+        [Required]
+        [Display(Name = "User Name")]
+        public string UserId { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Group Name")]
+        public string Name { get; set; }
+    }
 }
