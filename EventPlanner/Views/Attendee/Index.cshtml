@@ -20,9 +20,8 @@
             @Html.DisplayFor(modelItem => group.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=group.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=group.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=group.Id })
+            @Html.ActionLink("Details", "Details", new { id=group.Id }) | 
+            @Html.ActionLink("Delete", "DeleteGroup", new { id=group.Id})
         </td>
     </tr>
 }

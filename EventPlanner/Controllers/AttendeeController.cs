@@ -16,6 +16,7 @@ namespace EventPlanner.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Attendee
+        [Authorize]
         public ActionResult Index()
         {
             var AttendeeGroupModel = new AttendeeGroupViewModel();
@@ -32,24 +33,26 @@ namespace EventPlanner.Controllers
             }
             return View(AttendeeGroupModel);
         }
-
+        
         public ActionResult RemoveMemberFromGroup(string userId, int groupId)
         {
-            var idToSearch = (from row in db.UserToGroups where row.UserId == userId && row.GroupId == groupId select row.Id);
+            var idSearched = (from row in db.UserToGroups where row.UserId == userId && row.GroupId == groupId select row.Id);
+            int idToSearch = idSearched.First();
             var UserToGroupToRemove = db.UserToGroups.Find(idToSearch);
             db.UserToGroups.Remove(UserToGroupToRemove);
             db.SaveChanges();
-            return View();
+            return View("Details");
 
         }
 
         public ActionResult RemoveEventFromGroup(int eventId, int groupId)
         {
-            var idToSearch = (from row in db.GroupToEvents where row.EventId == eventId && row.GroupId == groupId select row.Id);
+            var idsearched = (from row in db.GroupToEvents where row.EventId == eventId && row.GroupId == groupId select row.Id);
+            int idToSearch = idsearched.First();
             var GroupToEventsToRemove = db.GroupToEvents.Find(idToSearch);
             db.GroupToEvents.Remove(GroupToEventsToRemove);
             db.SaveChanges();
-            return View();
+            return View("Details");
 
         }
 
@@ -147,29 +150,39 @@ namespace EventPlanner.Controllers
         }
 
         // GET: Attendee/Delete/5
-        public ActionResult Delete(int? id)
+        [HttpGet]
+        public ActionResult DeleteGroup(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserToGroup userToGroup = db.UserToGroups.Find(id);
-            if (userToGroup == null)
-            {
-                return HttpNotFound();
-            }
-            return View(userToGroup);
+            DeleteGroupViewModel DeleteGroupModel = new DeleteGroupViewModel();
+            DeleteGroupModel.Group = db.Groups.Find(id);     
+            return View(DeleteGroupModel);
         }
 
         // POST: Attendee/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteGroup(DeleteGroupViewModel DeleteGroupModel)
         {
-            UserToGroup userToGroup = db.UserToGroups.Find(id);
-            db.UserToGroups.Remove(userToGroup);
+            var groupToEventsQuery = from row in db.GroupToEvents where row.GroupId == DeleteGroupModel.Group.Id select row;
+            var groupsQuery = from row in db.Groups where row.Id == DeleteGroupModel.Group.Id select row;
+            var userToGroupsQuery = from row in db.UserToGroups where row.GroupId == DeleteGroupModel.Group.Id select row;
+            DeleteGroupModel.GroupToEventsToDelete = groupToEventsQuery.ToList();
+            DeleteGroupModel.GroupsToDelete = groupsQuery.ToList();
+            DeleteGroupModel.UserToGroupsToDelete = userToGroupsQuery.ToList();
+            foreach (UserToGroup userToGroup in DeleteGroupModel.UserToGroupsToDelete )
+            {
+                db.UserToGroups.Remove(userToGroup);
+            }
+            foreach (Group group in DeleteGroupModel.GroupsToDelete)
+            {
+                db.Groups.Remove(group);
+            }
+            foreach (GroupToEvents groupToEvent in DeleteGroupModel.GroupToEventsToDelete)
+            {
+                db.GroupToEvents.Remove(groupToEvent);
+            }
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Attendee");
         }
 
         protected override void Dispose(bool disposing)

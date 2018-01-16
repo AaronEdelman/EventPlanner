@@ -4,7 +4,7 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>@Model.Group.Name</h2>
 
 <div>
     <table class="table">
@@ -13,7 +13,8 @@
                 <th>User Name</th>
                 <th>Email</th>
             </tr>
-        </thead>
+        </thead> 
+@*CURRENTLY THROWS AN EXCEPTION WHEN THE ACTIVE USER REMOVES THEMSELVES AS THE LAST REMAINING MEMBER OF A GROUP*@               
 @foreach (var user in Model.CurrentUsers)
 {
 
@@ -60,4 +61,5 @@
             </tr>
         }
     </table>
+    @Html.ActionLink("Back", "Index")
 </div>
