@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNet.Identity
+
+<nav id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <li class="sidebar-brand">
+            @Html.ActionLink("Home", "Index", "Home")
+        </li>
+        <li class="sidebar-nav-item">
+            @Html.ActionLink("Search", "", "")
+        </li>
+        <li class="sidebar-nav-item">
+            @Html.ActionLink("Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        </li>
+        <li class="sidebar-nav-item">
+            @Html.ActionLink("My Events", "", "")
+        </li>
+        <li class="sidebar-nav-item">
+            @Html.ActionLink("My Groups", "", "")
+        </li>
+        <li class="sidebar-nav-item">
+            @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+        </li>
+        <li class="sidebar-nav-item">
+            @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+        </li>
+    </ul>
+</nav>

@@ -40,6 +40,13 @@
                 @Html.ValidationMessageFor(model => model.HasSeating, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Latitude, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.Latitude, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Latitude, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
         @*<div class="form-group">
             @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -84,3 +91,127 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+@*<%@ Page Language="C#" AutoEventWireup="true" CodeFile="sample.aspx.cs" Inherits="sample" %>*@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Show Google Map with Latitude and Longitude in asp.net website</title>
+    <style type="text/css">
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            vertical-align:top
+        }
+
+        #map_canvas {
+            height: 100%;
+        }
+    </style>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6v5-2uaq_wusHDktM9ILcqIrlPtnZgEk&sensor=false">
+    </script>
+    <script type="text/javascript">
+
+    function initialize() {
+        var myLatlng = new google.maps.LatLng(43.038902,-87.906471);
+        var myOptions = {
+            zoom:7,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById("gmap"), myOptions);
+        // marker refers to a global variable
+        var marker
+        = new google.maps.Marker({
+            //position: myLatlng,
+            map: map
+        });
+        // if center changed then update lat and lon document objects
+        //google.maps.event.addListener(map, 'center_changed', function () {
+        //    var location = map.getCenter();
+        //    document.getElementById("lat").innerHTML = location.lat();
+
+        //    document.getElementById("lon").innerHTML = location.lng();
+        //    // call function to reposition marker location
+        //    placeMarker(location);
+        //});
+        // if zoom changed, then update document object with new info
+        //google.maps.event.addListener(map, 'zoom_changed', function () {
+        //    zoomLevel = map.getZoom();
+        //    document.getElementById("zoom_level").innerHTML = zoomLevel;
+        //});
+        // double click on the marker changes zoom level
+        google.maps.event.addListener(marker, 'dblclick', function () {
+            zoomLevel = map.getZoom() + 1;
+            if (zoomLevel == 20) {
+                zoomLevel = 10;
+            }
+            document.getElementById("zoom_level").innerHTML = zoomLevel;
+            map.setZoom(zoomLevel);
+        });
+        function placeMarker(location) {
+            if (marker) {
+                marker.setPosition(location);
+            } else {
+                marker = new google.maps.Marker({
+                    position: location,
+                    map: map
+                });
+            }
+        }
+
+        google.maps.event.addListener(map, 'click', function (event) {
+            placeMarker(event.latLng);
+        });
+        //function bindInfoWindow(marker, map, Latitude, html) {
+        //    google.maps.event.addListener(marker, 'click', function () {
+        //        document.getElementById(event.latLng.lat()).innerHTML = html;
+        //    });
+        //}
+        //google.maps.event.addListener(map, 'click', function (event) {
+        //    document.getElementById('latlongclicked').value = event.latLng.lat()
+        //    document.getElementById('lotlongclicked').value = event.latLng.lng()
+        //});
+        var latlng = google.maps.event.addDomListener(map, 'click', function (event) {
+            //latJSON = JSON.stringify(event.latLng.lng());
+            var lat = event.latLng.lat();
+            //document.getElementById('Latitude') = lat;
+            return lat;
+            //document.getElementById('Longitude') = long;
+            alert("Latitude: " + event.latLng.lat() + " " + ", longitude: " + event.latLng.lng());
+        });
+
+    }
+    window.onload = function () { initialize() };
+    </script>
+    <style>
+        div#gmap {
+            width: 40%;
+            height: 500px;
+            border: double;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="form1" runat="server">
+        <center>
+            <!-- MAP HOLDER -->
+            <div id="gmap"></div>
+            <!-- REFERENCES -->
+            lat: 
+            lon: 
+
+        </center>
+
+    </form>
+</body>
+
+</html>
