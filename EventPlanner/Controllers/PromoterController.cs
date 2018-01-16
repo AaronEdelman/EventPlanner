@@ -38,7 +38,6 @@ namespace EventPlanner.Controllers
         }
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
         public ActionResult CreateEntertainment(int id)
         {
             var EntertainmentModel = new CreateEntertainmentViewModel();
