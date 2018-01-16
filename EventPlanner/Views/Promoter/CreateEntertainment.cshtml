@@ -1,0 +1,73 @@
+﻿@model EventPlanner.Models.CreateEntertainmentViewModel
+@{
+    ViewBag.Title = "CreateEntertainment";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Entertainment</h4>
+    <hr />
+    <div class="form-group">
+        <label> Entertainment Name </label>
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.CurrentEntertainment.Name, new { @class = "form=control" })
+            @Html.ValidationMessageFor(m => m.CurrentEntertainment.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label> Start Time</label>
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.CurrentEntertainment.StartTime, new { @class = "form=control" })
+            @Html.ValidationMessageFor(m => m.CurrentEntertainment.StartTime, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label> End Time</label>
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.CurrentEntertainment.EndTime, new { @class = "form=control" })
+            @Html.ValidationMessageFor(m => m.CurrentEntertainment.EndTime, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Start Date</label>
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.CurrentEntertainment.StartDate, new { @class = "form=control" })
+            @Html.ValidationMessageFor(m => m.CurrentEntertainment.StartDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label> End Date</label>
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.CurrentEntertainment.EndDate, new { @class = "form=control" })
+            @Html.ValidationMessageFor(m => m.CurrentEntertainment.EndDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.CurrentEntertainment.Restriction, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.CurrentEntertainment.Restriction, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.CurrentEntertainment.Restriction, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Venue </label>
+        <div class="col-md-10">
+            <select id="venueSelect">
+                @for (int i = 0; i < Model.PreMadeVenues.Count; i++)
+                {
+                    <option value="@Model.PreMadeVenues[i].Event.Id"> @Model.PreMadeVenues[i].Event.Name</option>
+                }
+            </select>
+            @Html.ValidationMessageFor(model => model.CurrentEntertainment.VenueId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-5">
+            <input type="Submit" value="CreateEntertainment" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}

@@ -37,42 +37,55 @@ namespace EventPlanner.Controllers
             return View(entertainment);
         }
 
-        // GET: Promoter/Create
-        public ActionResult Create()
-        {
-            ViewBag.EventId = new SelectList(db.Events, "Id", "Name");
-            ViewBag.VenueId = new SelectList(db.Venues, "Id", "Name");
-            return View();
-        }
-
-        // POST: Promoter/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpGet]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,StartTime,EndTime,StartDate,EndDate,Restriction,VenueId,EventId")] Entertainment entertainment, int Id)
+        public ActionResult CreateEntertainment(int id)
         {
-            if (ModelState.IsValid)
+            var EntertainmentModel = new CreateEntertainmentViewModel();
+            EntertainmentModel.PreMadeVenues = new List<Venue>();
+            var currentUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            foreach (ApplicationUser user in db.Users)
             {
-                string venueId = Request.Form["Venue"];
-                entertainment.EventId = Id;
-                entertainment.VenueId = Convert.ToInt32(venueId);
-                db.Entertainments.Add(entertainment);
-                db.SaveChanges();
-                return RedirectToAction("Create", "Promoter", Id);
+                if (user.Id == currentUserId)
+                {
+                    EntertainmentModel.Promoter= user;
+                }
             }
+            foreach (Event foundEvent in db.Events)
+            {
+                if (foundEvent.Id == id)
+                {
+                    EntertainmentModel.CurrentEvent = foundEvent;
+                    foreach (Venue venue in db.Venues)
+                    {
+                        if (venue.Event == foundEvent)
+                        {
+                            EntertainmentModel.PreMadeVenues.Add(venue);
+                        }
+                    }
+                }
+            }
+            return View(EntertainmentModel);
 
-            ViewBag.EventId = new SelectList(db.Events, "Id", "Name", entertainment.EventId);
-            ViewBag.VenueId = new SelectList(db.Venues, "Id", "Name", entertainment.VenueId);
-            return View(entertainment);
         }
-        public ActionResult CreateVenue(int? Id)
+        [HttpPost]
+        public ActionResult CreateEntertainment (CreateEntertainmentViewModel createEntertainmentViewModel)
         {
-            ViewBag.Id = Id;
-            ViewBag.EventId = new SelectList(db.Events, "Id", "Name");
-            return View();
-        }
+            var newEntertainment = new Entertainment
+            {
+                Name = createEntertainmentViewModel.CurrentEntertainment.Name,
+                StartTime = createEntertainmentViewModel.CurrentEntertainment.StartTime,
+                EndTime = createEntertainmentViewModel.CurrentEntertainment.EndTime,
+                StartDate = createEntertainmentViewModel.CurrentEntertainment.StartDate,
+                EndDate = createEntertainmentViewModel.CurrentEntertainment.EndDate,
+                Restriction = createEntertainmentViewModel.CurrentEntertainment.Restriction,
+                VenueId = createEntertainmentViewModel.VenueId,
+                Event = createEntertainmentViewModel.CurrentEvent
+            };
+            db.Entertainments.Add(newEntertainment);
+            return RedirectToAction("Create", "Promoter");
 
+        }
         // POST: Promoter/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -190,35 +203,35 @@ namespace EventPlanner.Controllers
             
             return View(newEvent);
         }
-        //GET: Promoter/View_Venues_Shows
-        public ActionResult View_Venues(int Id)
-        {
-            var venue_entertainment = new Venue_Entertainment();
-            venue_entertainment.venues = new List<Venue>();
-            venue_entertainment.entertainment = new List<Entertainment>();
-            foreach (Venue venue in db.Venues)
-            {
-                if (venue.EventId == Id)
-                {
-                    venue_entertainment.venues.Add(venue);
-                }
-            }
-            foreach (Entertainment show in db.Entertainments)
-            {
-                if (show.EventId == Id)
-                {
-                    venue_entertainment.entertainment.Add(show);
-                }
-            }
-            return View(venue_entertainment);
-        }
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        ////GET: Promoter/View_Venues_Shows
+        //public ActionResult View_Venues(int Id)
+        //{
+        //    var venue_entertainment = new Venue_Entertainment();
+        //    venue_entertainment.venues = new List<Venue>();
+        //    venue_entertainment.entertainment = new List<Entertainment>();
+        //    foreach (Venue venue in db.Venues)
+        //    {
+        //        if (venue.EventId == Id)
+        //        {
+        //            venue_entertainment.venues.Add(venue);
+        //        }
+        //    }
+        //    foreach (Entertainment show in db.Entertainments)
+        //    {
+        //        if (show.EventId == Id)
+        //        {
+        //            venue_entertainment.entertainment.Add(show);
+        //        }
+        //    }
+        //    return View(venue_entertainment);
+        //}
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }

@@ -214,6 +214,8 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\CreateEntertainmentViewModel.cs" />
+    <Compile Include="Models\CreateVenueViewModel.cs" />
     <Compile Include="Models\Entertainment.cs" />
     <Compile Include="Models\EntertainmentPreference.cs" />
     <Compile Include="Models\Event.cs" />
@@ -293,7 +295,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
-    <Content Include="Views\Promoter\Create.cshtml" />
     <Content Include="Views\Promoter\Delete.cshtml" />
     <Content Include="Views\Promoter\Details.cshtml" />
     <Content Include="Views\Promoter\Edit.cshtml" />
@@ -316,6 +317,7 @@
     <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\Promoter\CreateVenue.cshtml" />
     <Content Include="Views\Promoter\View_Venues.cshtml" />
+    <Content Include="Views\Promoter\CreateEntertainment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
