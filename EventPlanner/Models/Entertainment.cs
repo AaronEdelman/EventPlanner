@@ -11,13 +11,18 @@ namespace EventPlanner.Models
     {
         [Key]
         public int Id { get; set; }
+        [Display (Name = "Entertainment")]
         public string Name { get; set; }
+        [Display(Name = "Start Time")]
         public DateTime StartTime { get; set; }
+        [Display(Name = "End Time")]
         public DateTime EndTime { get; set; }
+        [Display(Name = "Start Date")]
         public DateTime StartDate { get; set; }
+        [Display(Name = "End Date")]
         public DateTime EndDate { get; set; }
         public string Restriction { get; set; }
-
+        [Required(ErrorMessage = "Venue is required.")]
         public int VenueId { get; set; }
         [ForeignKey("VenueId")]
         public Venue Venue { get; set; }

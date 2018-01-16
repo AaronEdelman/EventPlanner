@@ -11,7 +11,8 @@ namespace EventPlanner.Controllers
 {
     public class UsersController : Controller
     {
-        // GET: Users
+        [Authorize]
+        
         public ActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
@@ -23,9 +24,12 @@ namespace EventPlanner.Controllers
 
                 if (isPromoterUser())
                 {
-                    ViewBag.displayMenu = "Yes";
+                    return RedirectToAction("Index", "Promoter");
                 }
-                return View();
+                else
+                {
+                    return RedirectToAction("Index", "Attendee");
+                }
             }
             else
             {
@@ -34,6 +38,7 @@ namespace EventPlanner.Controllers
             return View();
 
         }
+
         public Boolean isPromoterUser()
         {
             if (User.Identity.IsAuthenticated)

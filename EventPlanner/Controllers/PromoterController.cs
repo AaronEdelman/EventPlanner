@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EventPlanner.Models;
+using Microsoft.AspNet.Identity;
 
 namespace EventPlanner.Controllers
 {
@@ -49,20 +50,47 @@ namespace EventPlanner.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,StartTime,EndTime,StartDate,EndDate,Restriction,VenueId,EventId")] Entertainment entertainment)
+        public ActionResult Create([Bind(Include = "Name,StartTime,EndTime,StartDate,EndDate,Restriction,VenueId,EventId")] Entertainment entertainment, int Id)
         {
             if (ModelState.IsValid)
             {
+                string venueId = Request.Form["Venue"];
+                entertainment.EventId = Id;
+                entertainment.VenueId = Convert.ToInt32(venueId);
                 db.Entertainments.Add(entertainment);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create", "Promoter", Id);
             }
 
             ViewBag.EventId = new SelectList(db.Events, "Id", "Name", entertainment.EventId);
             ViewBag.VenueId = new SelectList(db.Venues, "Id", "Name", entertainment.VenueId);
             return View(entertainment);
         }
+        public ActionResult CreateVenue(int? Id)
+        {
+            ViewBag.Id = Id;
+            ViewBag.EventId = new SelectList(db.Events, "Id", "Name");
+            return View();
+        }
 
+        // POST: Promoter/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateVenue([Bind(Include = "Id,Name,EventId")] Venue venue, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                venue.EventId = Id;
+                db.Venues.Add(venue);
+                db.SaveChanges();
+                return RedirectToAction("Create", "Promoter", Id);
+            }
+
+            ViewBag.EventId = new SelectList(db.Events, "Id", "Name", venue.EventId);
+            return View(venue);
+        }
         // GET: Promoter/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -122,6 +150,45 @@ namespace EventPlanner.Controllers
             db.Entertainments.Remove(entertainment);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        // GET: Promoter/Events
+        public ActionResult Events()
+        {
+            var events = db.Events;
+            return View(events.ToList());
+        }
+        // GET: Promoter/MyInfo
+        public ActionResult MyInfo()
+        {
+            var userId = User.Identity.GetUserId();
+            var user = db.Users.Where(n => n.Id == userId);
+            return View(user.ToList());
+        }
+        // GET: Promoter/CreateEvent
+        public ActionResult CreateEvent()
+        {
+            ViewBag.AddressId = new SelectList(db.Addresses, "Id", "Name");
+            return View();
+        }
+
+        // POST: Promoter/CreateEvent
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateEvent([Bind(Include = "Name,StartTime,EndTime,StartDate,EndDate,Weblink,AddressId")] Event newEvent)
+        {
+            //Address address = new Address();
+            //newEvent.AddressId = address.Id;
+            if (ModelState.IsValid)
+            {
+                db.Events.Add(newEvent);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            
+            return View(newEvent);
         }
 
         protected override void Dispose(bool disposing)
