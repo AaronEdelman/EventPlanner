@@ -9,6 +9,7 @@ namespace EventPlanner.Models
     public class UserToGroup
     {
         public int Id { get; set; }
+        public bool AcceptedInvite { get; set; }
 
         public string UserId { get; set; }
         [ForeignKey("UserId")]

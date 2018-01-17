@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "WeatherEx";
+}
+
+<h2>WeatherEx</h2>
+
+<p id="reply">
+<button>Get Forecast</button>
+
+</p>
+
+<script>
+    $(document).ready(function(){
+        $("button").click(function(){
+             $.get("http://api.openweathermap.org/data/2.5/forecast?q=Milwaukee&APPID=cea53ed56c3ee5fc14e6d1120b4e9e9d", function (response) {
+        //response
+                $("#reply").text(response);
+            });
+        });
+    });
+</script>
+

@@ -21,7 +21,8 @@
         </td>
         <td>
             @Html.ActionLink("Details", "Details", new { id=group.Id }) | 
-            @Html.ActionLink("Delete", "DeleteGroup", new { id=group.Id})
+            @Html.ActionLink("Delete", "DeleteGroup", new { id=group.Id}) |
+            @Html.ActionLink("Invite", "InviteToGroup", new { id = group.Id })
         </td>
     </tr>
 }

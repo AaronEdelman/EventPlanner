@@ -16,7 +16,7 @@ namespace EventPlanner.Controllers
         ApplicationDbContext db;
         public PromoterController()
         {
-              db = new ApplicationDbContext();
+            db = new ApplicationDbContext();
         }
 
         // GET: Promoter
@@ -53,7 +53,7 @@ namespace EventPlanner.Controllers
             {
                 if (user.Id == currentUserId)
                 {
-                    EntertainmentModel.Promoter= user;
+                    EntertainmentModel.Promoter = user;
                 }
             }
             foreach (Event foundEvent in db.Events)
@@ -62,13 +62,13 @@ namespace EventPlanner.Controllers
                 {
                     EntertainmentModel.CurrentEvent = foundEvent;
                     EntertainmentModel.CurrentEventId = foundEvent.Id;
-                    }
                 }
+            }
             return View(EntertainmentModel);
 
         }
         [HttpPost]
-        public ActionResult CreateEntertainment (CreateEntertainmentViewModel createEntertainmentViewModel)
+        public ActionResult CreateEntertainment(CreateEntertainmentViewModel createEntertainmentViewModel)
         {
             var newEntertainment = new Entertainment
             {
@@ -107,7 +107,7 @@ namespace EventPlanner.Controllers
                 IsOutdoors = model.CurrentVenue.IsOutdoors,
                 HasSeating = model.CurrentVenue.HasSeating,
             };
-            foreach(Event foundEvent in db.Events)
+            foreach (Event foundEvent in db.Events)
             {
                 if (foundEvent.Id == model.IdOfEvent)
                 {
@@ -216,7 +216,7 @@ namespace EventPlanner.Controllers
                 return RedirectToAction("Index");
             }
 
-            
+
             return View(newEvent);
         }
 
@@ -226,54 +226,14 @@ namespace EventPlanner.Controllers
             viewVenuesViewModel.UserVenues = new List<Venue>();
             //try
             //{
-                foreach (Venue venue in db.Venues)
+            foreach (Venue venue in db.Venues)
+            {
+                if (Id == venue.Id)
                 {
-                    if (Id == venue.Id)
-                    {
-                        viewVenuesViewModel.UserVenues.Add(venue);
-                    }
+                    viewVenuesViewModel.UserVenues.Add(venue);
                 }
-
+            }
             return View(viewVenuesViewModel);
         }
-
-            //}
-            //catch
-            //{
-            //    return RedirectToAction("Index", "Events", new { id = Id });
-        //    //}
-
-        //}
-
-        ////GET: Promoter/View_Venues_Shows
-        //public ActionResult View_Venues(int Id)
-        //{
-        //    var venue_entertainment = new Venue_Entertainment();
-        //    venue_entertainment.venues = new List<Venue>();
-        //    venue_entertainment.entertainment = new List<Entertainment>();
-        //    foreach (Venue venue in db.Venues)
-        //    {
-        //        if (venue.EventId == Id)
-        //        {
-        //            venue_entertainment.venues.Add(venue);
-        //        }
-        //    }
-        //    foreach (Entertainment show in db.Entertainments)
-        //    {
-        //        if (show.EventId == Id)
-        //        {
-        //            venue_entertainment.entertainment.Add(show);
-        //        }
-        //    }
-        //    return View(venue_entertainment);
-        //}
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
     }
 }

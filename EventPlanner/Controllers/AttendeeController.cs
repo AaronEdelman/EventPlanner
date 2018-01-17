@@ -184,7 +184,39 @@ namespace EventPlanner.Controllers
             db.SaveChanges();
             return RedirectToAction("Index","Attendee");
         }
-
+        //Get: Attendee/InviteToGroup
+        public ActionResult InviteToGroup(int id)
+        {
+            UserToGroup UsersGroup = new UserToGroup();
+            UsersGroup.Group = db.Groups.Find(id);
+            return View(UsersGroup);
+        }
+        //POST: Attendee/InviteToGroup
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult InviteToGroup(UserToGroup model)
+        {
+            if (ModelState.IsValid)
+            {
+                UserToGroup userToGroup = new UserToGroup();
+                foreach (ApplicationUser user in db.Users)
+                {
+                    if (user.Email == model.User.Email)
+                    {
+                        ApplicationUser invitee = user;
+                        userToGroup.UserId = invitee.Id;
+                    }
+                }
+                    userToGroup.GroupId = model.Group.Id;
+                    userToGroup.AcceptedInvite = false;
+                    db.UserToGroups.Add(userToGroup);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+            }
+            UserToGroup UsersGroup = new UserToGroup();
+            UsersGroup.Group = db.Groups.Find(model.Group.Id);
+            return View(UsersGroup);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
