@@ -21,8 +21,10 @@ namespace EventPlanner.Controllers
         {
             var AttendeeGroupModel = new AttendeeGroupViewModel();
             var currentUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var groups = (from x in db.UserToGroups where x.UserId == currentUserId select x.Group).ToList();
-            AttendeeGroupModel.CurrentGroups = groups;
+            var acceptedGroups = (from x in db.UserToGroups where x.UserId == currentUserId && x.AcceptedInvite == true select x.Group).ToList();
+            var invitedGroups = (from x in db.UserToGroups where x.UserId == currentUserId && x.AcceptedInvite == false select x).ToList();
+            AttendeeGroupModel.CurrentGroups = acceptedGroups;
+            AttendeeGroupModel.Invites = invitedGroups;
             AttendeeGroupModel.User = db.Users.Find(currentUserId);
             foreach(ApplicationUser user in db.Users)
             {
@@ -32,6 +34,22 @@ namespace EventPlanner.Controllers
                 }
             }
             return View(AttendeeGroupModel);
+        }
+
+        public ActionResult AcceptGroupInvite (int? id)
+        {
+            db.UserToGroups.Find(id).AcceptedInvite = true;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+
+        }
+
+        public ActionResult DeclineGroupInvite (int? id)
+        {
+            db.UserToGroups.Remove(db.UserToGroups.Find(id));
+            db.SaveChanges();
+            return RedirectToAction("Index");
+
         }
         
         public ActionResult RemoveMemberFromGroup(string userId, int groupId)
@@ -95,7 +113,7 @@ namespace EventPlanner.Controllers
             if (ModelState.IsValid)
             {
                 var newGroup = new Group{ Name = model.Group.Name };
-                var newUserToGroup = new UserToGroup { UserId = model.CurrentUserId, GroupId = newGroup.Id };
+                var newUserToGroup = new UserToGroup { UserId = model.CurrentUserId, GroupId = newGroup.Id, AcceptedInvite = true };
                 var newGroupToEvent = new GroupToEvents { GroupId = newGroup.Id, EventId = model.Event.Id };
                 db.Groups.Add(newGroup);
                 db.UserToGroups.Add(newUserToGroup);

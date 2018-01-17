@@ -9,6 +9,27 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+<table class="table">
+    <tr>
+        <th scope="col">Invites </th>
+    </tr>
+
+    @foreach (var invite in Model.Invites)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => invite.Group)
+            </td>
+            <td>
+                @Html.ActionLink("Accept", "AcceptGroupInvite", new { id = invite.Id }) |
+                @Html.ActionLink("Decline", "DeclineGroupInvite", new { id = invite.Id }) |
+            </td>
+        </tr>
+    }
+
+</table>
+
 <table class="table">
     <tr>
         <th scope="col">Group Name </th>
