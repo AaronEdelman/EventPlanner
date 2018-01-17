@@ -163,23 +163,26 @@ namespace EventPlanner.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteGroup(DeleteGroupViewModel DeleteGroupModel)
         {
-            var groupToEventsQuery = from row in db.GroupToEvents where row.GroupId == DeleteGroupModel.Group.Id select row;
-            var groupsQuery = from row in db.Groups where row.Id == DeleteGroupModel.Group.Id select row;
-            var userToGroupsQuery = from row in db.UserToGroups where row.GroupId == DeleteGroupModel.Group.Id select row;
-            DeleteGroupModel.GroupToEventsToDelete = groupToEventsQuery.ToList();
-            DeleteGroupModel.GroupsToDelete = groupsQuery.ToList();
-            DeleteGroupModel.UserToGroupsToDelete = userToGroupsQuery.ToList();
-            foreach (UserToGroup userToGroup in DeleteGroupModel.UserToGroupsToDelete )
+            foreach (GroupToEvents groupToEvent in db.GroupToEvents)
             {
-                db.UserToGroups.Remove(userToGroup);
+                if (DeleteGroupModel.Group.Id == groupToEvent.GroupId)
+                {
+                    db.GroupToEvents.Remove(groupToEvent);
+                }
             }
-            foreach (Group group in DeleteGroupModel.GroupsToDelete)
+            foreach (Group group in db.Groups)
             {
-                db.Groups.Remove(group);
+                if (DeleteGroupModel.Group.Id == group.Id)
+                {
+                    db.Groups.Remove(group);
+                }
             }
-            foreach (GroupToEvents groupToEvent in DeleteGroupModel.GroupToEventsToDelete)
+            foreach (UserToGroup userToGroup in db.UserToGroups)
             {
-                db.GroupToEvents.Remove(groupToEvent);
+                if (DeleteGroupModel.Group.Id == userToGroup.GroupId)
+                {
+                    db.UserToGroups.Remove(userToGroup);
+                }
             }
             db.SaveChanges();
             return RedirectToAction("Index","Attendee");
