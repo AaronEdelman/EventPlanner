@@ -1,34 +1,65 @@
-﻿@model EventPlanner.Models.UserToGroup
+﻿@model EventPlanner.Models.GroupToEventsViewModel
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>@Model.Group.Name</h2>
 
 <div>
-    <h4>UserToGroup</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Group.Name)
-        </dt>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Email</th>
+            </tr>
+        </thead> 
+@*CURRENTLY THROWS AN EXCEPTION WHEN THE ACTIVE USER REMOVES THEMSELVES AS THE LAST REMAINING MEMBER OF A GROUP*@               
+@foreach (var user in Model.CurrentUsers)
+{
 
-        <dd>
-            @Html.DisplayFor(model => model.Group.Name)
-        </dd>
+    <tr>
+        <td>
+            @user.UserName
+        </td>
+        <td>
+            @user.Email
+        </td>
+        <td>
+            @Html.ActionLink("Remove", "RemoveMemberFromGroup", new { userId = user.Id, groupId = Model.Group.Id })
+        </td>
+    </tr>
+}
+    </table>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.User.Email)
-        </dt>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Event Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Web Link</th>
+            </tr>
+        </thead>
+        @foreach (var eve in Model.Events)
+        {
 
-        <dd>
-            @Html.DisplayFor(model => model.User.Email)
-        </dd>
-
-    </dl>
+            <tr>
+                <td>
+                    @eve.Name
+                </td>
+                <td>
+                    @eve.StartDate
+                </td>
+                <td>
+                    @eve.EndDate
+                </td>
+                <td>
+                    @eve.Weblink
+                </td>
+                <td>@Html.ActionLink("Remove", "RemoveEventFromGroup", new { eventId = eve.Id, groupId = Model.Group.Id })</td>
+            </tr>
+        }
+    </table>
+    @Html.ActionLink("Back", "Index")
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

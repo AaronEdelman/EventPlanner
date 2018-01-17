@@ -6,17 +6,16 @@ using System.Web;
 
 namespace EventPlanner.Models
 {
-    public class UserToGroup
+    public class GroupToEvents
     {
         public int Id { get; set; }
-        public bool AcceptedInvite { get; set; }
-
-        public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public ApplicationUser User { get; set; }
 
         public int GroupId { get; set; }
         [ForeignKey("GroupId")]
         public Group Group { get; set; }
+
+        public int EventId { get; set; }
+        [ForeignKey("EventId")]
+        public Event Event { get; set; }
     }
 }
