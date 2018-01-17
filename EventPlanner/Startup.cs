@@ -30,15 +30,19 @@ namespace EventPlanner
             // creating Creating Promoter role    
             if (!roleManager.RoleExists("Promoter"))
             {
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "Promoter";
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+                {
+                    Name = "Promoter"
+                };
                 roleManager.Create(role);
             }
             // Creating Attendee role    
             if (!roleManager.RoleExists("Attendee"))
             {
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "Attendee";
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+                {
+                    Name = "Attendee"
+                };
                 roleManager.Create(role);
 
             }

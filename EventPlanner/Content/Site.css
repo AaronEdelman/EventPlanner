@@ -1,6 +1,10 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-image: url("../Images/violetNightSkty.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 105%;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -21,4 +25,8 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+#table
+{
+    background-color: #98878F
 }

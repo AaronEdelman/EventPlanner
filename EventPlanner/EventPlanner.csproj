@@ -213,10 +213,16 @@
     <Compile Include="Migrations\201801161354029_AddingInGroupToEventsTable.Designer.cs">
       <DependentUpon>201801161354029_AddingInGroupToEventsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801172243338_InstructorTest.cs" />
+    <Compile Include="Migrations\201801172243338_InstructorTest.Designer.cs">
+      <DependentUpon>201801172243338_InstructorTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddEventToGroupViewModel.cs" />
     <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\CreateEntertainmentViewModel.cs" />
+    <Compile Include="Models\CreateVenueViewModel.cs" />
     <Compile Include="Models\DeleteGroupViewModel.cs" />
     <Compile Include="Models\GroupDetailsViewModel.cs" />
     <Compile Include="Models\GroupToAttendeesViewModel.cs" />
@@ -233,7 +239,8 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UserToGroup.cs" />
     <Compile Include="Models\Venue.cs" />
-    <Compile Include="Models\Venue_Entertainment.cs" />
+    <Compile Include="Models\ViewVenuesViewModel.cs" />
+    <Compile Include="Models\VoteViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Weather.cs" />
@@ -247,8 +254,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\eventBlurredCrowd.jpg" />
-    <Content Include="Images\HomePicture.jpg" />
+    <Content Include="Images\eventInvisBg.png" />
+    <Content Include="Images\favicon.ico" />
+    <Content Include="Images\logo2.png" />
+    <Content Include="Images\violetNightSkty.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -306,7 +315,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
-    <Content Include="Views\Promoter\Create.cshtml" />
     <Content Include="Views\Promoter\Delete.cshtml" />
     <Content Include="Views\Promoter\Details.cshtml" />
     <Content Include="Views\Promoter\Edit.cshtml" />
@@ -329,10 +337,12 @@
     <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\Promoter\CreateVenue.cshtml" />
     <Content Include="Views\Attendee\Create.cshtml" />
-    <Content Include="Views\Promoter\View_Venues.cshtml" />
+    <Content Include="Views\Promoter\CreateEntertainment.cshtml" />
+    <Content Include="Views\Promoter\ViewVenues.cshtml" />
     <Content Include="Views\WeatherEx.cshtml" />
     <Content Include="Views\Attendee\InviteToGroup.cshtml" />
     <Content Include="Views\Attendee\AddEventToGroup.cshtml" />
+    <Content Include="Views\Attendee\Vote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -358,6 +368,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801161354029_AddingInGroupToEventsTable.resx">
       <DependentUpon>201801161354029_AddingInGroupToEventsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801172243338_InstructorTest.resx">
+      <DependentUpon>201801172243338_InstructorTest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

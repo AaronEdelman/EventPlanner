@@ -1,217 +1,174 @@
-﻿@model EventPlanner.Models.Venue
-<p>Venue Partial View</p>
-@using (Html.BeginForm("CreateVenue", "Promoter", FormMethod.Post))
+﻿@model EventPlanner.Models.CreateVenueViewModel
+@{
+    ViewBag.Title = "CreateVenue";
+}
+
+@using (Html.BeginForm("CreateVenue", "Promoter", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-
+ 
     <div class="form-horizontal">
-        <h4>Entertainment</h4>
+        <h4>Venue</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-5">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsDisabledFriendly, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-5">
-                @Html.EditorFor(model => model.IsDisabledFriendly, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IsDisabledFriendly, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsOutdoors, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-5">
-                @Html.EditorFor(model => model.IsOutdoors, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IsOutdoors, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.HasSeating, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-5">
-                @Html.EditorFor(model => model.HasSeating, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.HasSeating, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Latitude, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-5">
-                @Html.EditorFor(model => model.Latitude, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Latitude, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-5">
-                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Restriction, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-5">
-                @Html.EditorFor(model => model.Restriction, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Restriction, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.VenueId, "VenueId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-5">
-                @Html.DropDownList("VenueId", (SelectList)(ViewBag.VenueId), htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.VenueId, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.EventId, "EventId", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-5">
-                    @Html.DropDownList("EventId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.EventId, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-md-10">
+                    <label> Venue Name </label>
                 </div>
-            </div>*@
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-5">
-                <input type="submit" value="CreateVenue" class="btn btn-default" />
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.CurrentVenue.Name, new { @class = "form=control" })
+                    @Html.ValidationMessageFor(m => m.CurrentVenue.Name, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-10">
+                    <label> Restrictions</label>
+                </div>
+                <div class="col-md-10">
+                    <div class=" row">
+                        @Html.CheckBoxFor(m => m.CurrentVenue.IsOutdoors, "False")
+                        <label> Outdoors</label>
+                    </div>
+                    <div class=" row">
+                        @Html.CheckBoxFor(m => m.CurrentVenue.IsDisabledFriendly, "False")
+                        <label> People with Disabilities Friendly </label>
+                    </div>
+                    <div class=" row">
+                        @Html.CheckBoxFor(m => m.CurrentVenue.HasSeating, "False")
+                        <label> 18+ Only </label>
+                    </div>
+                </div>
+            </div>
+            @Html.HiddenFor(m => m.IdOfEvent)
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-5">
+                    <input type="submit" value="CreateVenue" class="btn btn-default" label="CreateVenue" />
+                </div>
+            </div>
+        </div>
+        }
     </div>
 }
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-@*<%@ Page Language="C#" AutoEventWireup="true" CodeFile="sample.aspx.cs" Inherits="sample" %>*@
 
-<!DOCTYPE html>
+    @*<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Show Google Map with Latitude and Longitude in asp.net website</title>
-    <style type="text/css">
-        html {
-            height: 100%;
-        }
-
-        body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            vertical-align:top
-        }
-
-        #map_canvas {
-            height: 100%;
-        }
-    </style>
-    <script type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6v5-2uaq_wusHDktM9ILcqIrlPtnZgEk&sensor=false">
-    </script>
-    <script type="text/javascript">
-
-    function initialize() {
-        var myLatlng = new google.maps.LatLng(43.038902,-87.906471);
-        var myOptions = {
-            zoom:7,
-            center: myLatlng,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        }
-        map = new google.maps.Map(document.getElementById("gmap"), myOptions);
-        // marker refers to a global variable
-        var marker
-        = new google.maps.Marker({
-            //position: myLatlng,
-            map: map
-        });
-        // if center changed then update lat and lon document objects
-        //google.maps.event.addListener(map, 'center_changed', function () {
-        //    var location = map.getCenter();
-        //    document.getElementById("lat").innerHTML = location.lat();
-
-        //    document.getElementById("lon").innerHTML = location.lng();
-        //    // call function to reposition marker location
-        //    placeMarker(location);
-        //});
-        // if zoom changed, then update document object with new info
-        //google.maps.event.addListener(map, 'zoom_changed', function () {
-        //    zoomLevel = map.getZoom();
-        //    document.getElementById("zoom_level").innerHTML = zoomLevel;
-        //});
-        // double click on the marker changes zoom level
-        google.maps.event.addListener(marker, 'dblclick', function () {
-            zoomLevel = map.getZoom() + 1;
-            if (zoomLevel == 20) {
-                zoomLevel = 10;
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head runat="server">
+        <title>Show Google Map with Latitude and Longitude in asp.net website</title>
+        <style type="text/css">
+            html {
+                height: 100%;
             }
-            document.getElementById("zoom_level").innerHTML = zoomLevel;
-            map.setZoom(zoomLevel);
-        });
-        function placeMarker(location) {
-            if (marker) {
-                marker.setPosition(location);
-            } else {
-                marker = new google.maps.Marker({
-                    position: location,
-                    map: map
+
+            body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                vertical-align: top
+            }
+
+            #map_canvas {
+                height: 100%;
+            }
+        </style>
+        <script type="text/javascript"
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6v5-2uaq_wusHDktM9ILcqIrlPtnZgEk&sensor=false">
+        </script>
+        <script type="text/javascript">
+
+            function initialize() {
+                var myLatlng = new google.maps.LatLng(43.038902, -87.906471);
+                var myOptions = {
+                    zoom: 7,
+                    center: myLatlng,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                }
+                map = new google.maps.Map(document.getElementById("gmap"), myOptions);
+                var marker = new google.maps.Marker({map: map});
+                // if center changed then update lat and lon document objects
+                //google.maps.event.addListener(map, 'center_changed', function () {
+                //    var location = map.getCenter();
+                //    document.getElementById("lat").innerHTML = location.lat();
+
+                //    document.getElementById("lon").innerHTML = location.lng();
+                //    // call function to reposition marker location
+                //    placeMarker(location);
+                //});
+                // if zoom changed, then update document object with new info
+                //google.maps.event.addListener(map, 'zoom_changed', function () {
+                //    zoomLevel = map.getZoom();
+                //    document.getElementById("zoom_level").innerHTML = zoomLevel;
+                //});
+                // double click on the marker changes zoom level
+                google.maps.event.addListener(marker, 'dblclick', function () {
+                    zoomLevel = map.getZoom() + 1;
+                    if (zoomLevel == 20) {
+                        zoomLevel = 10;
+                    }
+                    document.getElementById("zoom_level").innerHTML = zoomLevel;
+                    map.setZoom(zoomLevel);
                 });
+                function placeMarker(location) {
+                    if (marker) {
+                        marker.setPosition(location);
+                    } else {
+                        marker = new google.maps.Marker({
+                            position: location,
+                            map: map,
+                        });
+                        return marker;
+                    }
+                }
+
+                google.maps.event.addListener(map, 'click', function (event) {
+                    placeMarker(event.latLng);
+                });
+                //function bindInfoWindow(marker, map, Latitude, html) {
+                //    google.maps.event.addListener(marker, 'click', function () {
+                //        document.getElementById(event.latLng.lat()).innerHTML = html;
+                //    });
+                //}
+                //google.maps.event.addListener(map, 'click', function (event) {
+                //    document.getElementById('latlongclicked').value = event.latLng.lat()
+                //    document.getElementById('lotlongclicked').value = event.latLng.lng()
+                //});
+                var latlng = google.maps.event.addDomListener(map, 'click', function (event) {
+                    //latJSON = JSON.stringify(event.latLng.lng());
+                    var lat = event.latLng.lat();
+                    //document.getElementById('Latitude') = lat;
+                    return lat;
+                    var long = event.latlng.lng();
+                    return long;
+                    //document.getElementById('Longitude') = long;
+                    alert("Latitude: " + event.latLng.lat() + " " + ", longitude: " + event.latLng.lng());
+                });
+                var data = { id: marker.}
             }
-        }
+            window.onload = function () { initialize() };
 
-        google.maps.event.addListener(map, 'click', function (event) {
-            placeMarker(event.latLng);
-        });
-        //function bindInfoWindow(marker, map, Latitude, html) {
-        //    google.maps.event.addListener(marker, 'click', function () {
-        //        document.getElementById(event.latLng.lat()).innerHTML = html;
-        //    });
-        //}
-        //google.maps.event.addListener(map, 'click', function (event) {
-        //    document.getElementById('latlongclicked').value = event.latLng.lat()
-        //    document.getElementById('lotlongclicked').value = event.latLng.lng()
-        //});
-        var latlng = google.maps.event.addDomListener(map, 'click', function (event) {
-            //latJSON = JSON.stringify(event.latLng.lng());
-            var lat = event.latLng.lat();
-            //document.getElementById('Latitude') = lat;
-            return lat;
-            //document.getElementById('Longitude') = long;
-            alert("Latitude: " + event.latLng.lat() + " " + ", longitude: " + event.latLng.lng());
-        });
+        </script>
 
-    }
-    window.onload = function () { initialize() };
-    </script>
-    <style>
-        div#gmap {
-            width: 40%;
-            height: 500px;
-            border: double;
-        }
-    </style>
-</head>
+    </head>
 
-<body>
-    <form id="form1" runat="server">
-        <center>
-            <!-- MAP HOLDER -->
-            <div id="gmap"></div>
-            <!-- REFERENCES -->
-            lat: 
-            lon: 
+    <body>
+        <form id="form1" runat="server">
+            <center>
+                <!-- MAP HOLDER -->
+                <div id="gmap"></div>
+                <!-- REFERENCES -->
+                lat:
+                lon:
 
-        </center>
+            </center>
 
-    </form>
-</body>
+        </form>
+    </body>
 
-</html>
+</html>*@

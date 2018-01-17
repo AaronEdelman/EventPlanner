@@ -21,6 +21,8 @@
             })
         })
     </script>
+    <link runat ="server" rel="shortcut icon" href="~/Images/favicon.ico" type="image/x-icon" />
+    <link runat ="server" rel="icon" href="~/Images/favicon.ico" type="image/ico" />
 </head>
 <body>
     <div class="menu-icon">
@@ -29,7 +31,7 @@
         <span></span>
     </div>
     <div class="sidebar">
-        <a href="#"><img src="logo.jpg" /></a>
+        <a href="#"><img src="~/Images/logo2.png" /></a>
         <ul class=" menu">
             <li>
                 @Html.ActionLink("Home","Index","Home")
@@ -49,9 +51,6 @@
             <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
             <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
         </ul>
-        
-
-
     </div>
 
 
@@ -61,10 +60,6 @@
 
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year -Pekkep Corp</p>
-        </footer>
     </div>
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")

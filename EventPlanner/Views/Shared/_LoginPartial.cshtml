@@ -1,12 +1,12 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm"}))
     {
         @Html.AntiForgeryToken()
 
         <li>
-            @Html.ActionLink("Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            @Html.ActionLink("My Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
         <li>@Html.ActionLink("My Info", "Index", "Users")</li>
         if (User.IsInRole("Promoter"))
@@ -15,8 +15,8 @@
         }
         else if (User.IsInRole("Attendee"))
         {
-            <li> @Html.ActionLink("My Groups", "Groups", "Attendee")</li>
-            <li>@Html.ActionLink("My Events", "Evebts", "Attendee")</li>
+            <li> @Html.ActionLink("My Groups", "Index", "Attendee")</li>
+            <li>@Html.ActionLink("My Events", "Index", "Events")</li>
         }
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     }

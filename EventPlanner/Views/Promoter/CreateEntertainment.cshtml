@@ -1,0 +1,108 @@
+﻿@model EventPlanner.Models.CreateEntertainmentViewModel
+@{
+    ViewBag.Title = "CreateEntertainment";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Entertainment</h4>
+    <hr />
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-10">
+                <label> Entertainment Name </label>
+            </div>
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.CurrentEntertainment.Name, new { @class = "form=control" })
+                @Html.ValidationMessageFor(m => m.CurrentEntertainment.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-10">
+                <label> Start Time</label>
+            </div>
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.CurrentEntertainment.StartTime, new { @class = "form=control" })
+                @Html.ValidationMessageFor(m => m.CurrentEntertainment.StartTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-10">
+                <label> End Time</label>
+            </div>
+            <div class=" col-md-10">
+                @Html.TextBoxFor(m => m.CurrentEntertainment.EndTime, new { @class = "form=control" })
+                @Html.ValidationMessageFor(m => m.CurrentEntertainment.EndTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-10">
+                <label>Start Date</label>
+            </div>
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.CurrentEntertainment.StartDate, new { @id = "datepicker" })
+                @Html.ValidationMessageFor(m => m.CurrentEntertainment.StartDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-10">
+                <label> End Date</label>
+            </div>
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.CurrentEntertainment.EndDate, new { @id = "datepicker" })
+                @Html.ValidationMessageFor(m => m.CurrentEntertainment.EndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-10">
+                <label> Restrictions</label>
+            </div>
+            <div class="col-md-10">
+                <div class=" row">
+                    @Html.CheckBoxFor(m => m.CurrentEntertainment.IsOutdoors, "False")
+                    <label> Outdoors</label>
+                </div>
+                <div class=" row">
+                    @Html.CheckBoxFor(m => m.CurrentEntertainment.IsDisabledFriendly, "False")
+                    <label> People with Disabilities Friendly </label>
+                </div>
+                <div class=" row">
+                    @Html.CheckBoxFor(m => m.CurrentEntertainment.IsAgeEighteenPlus, "False")
+                    <label> 18+ Only </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-10">
+                <label>Venue </label>
+            </div>
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.CurrentVenueId, Model.PreMadeVenues, htmlAttributes: new { @class = "form-control" })
+                @Html.HiddenFor(m => m.CurrentEventId)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-5">
+                <input type="Submit" value="CreateEntertainment" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</div>
+}
