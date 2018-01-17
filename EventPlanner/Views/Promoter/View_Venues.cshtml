@@ -4,22 +4,46 @@
     ViewBag.Title = "View_Venues";
 }
 
+<head>
+    <style>
+        p {
+            text-indent: 50px;
+          }
+    </style>
+
+</head>
+
 <h2>View_Venues</h2>
 <table class="table">
     @foreach (var item in Model.venues)
     {
         <tr>
             <th>
-                @Html.DisplayFor(modelitem => item.Name)
-                @foreach (var thing in Model.entertainment)
-                {
-                if (item.Id == thing.VenueId)
-                {
-                    @Html.DisplayFor(modelthing => thing.Name)
-                }
-                }
+                <h3>@Html.DisplayFor(modelitem => item.Name)</h3>
+            </th>
+            <th>
+                @Html.ActionLink("Delete", "DeleteVenue", new { id = item.Id })
             </th>
         </tr>
+                foreach (var thing in Model.entertainment)
+                {
+                    if (item.Id == thing.VenueId)
+                    {
+                        <tr>
+                            <td>
+                                <p>@Html.DisplayFor(modelthing => thing.Name)</p>
+                            </td>
+                            <td>
+                                <p>@Html.DisplayFor(modelthing => thing.StartTime)
+                                    to
+                                @Html.DisplayFor(modelthing => thing.EndTime)</p>
+                            </td>
+                            <td>
+                                @Html.ActionLink("Delete", "Delete", new { id = thing.Id })
+                            </td>
+                        </tr>
+                    }
+                }
     }
 </table>
 @*@for (int i = 0; i < Model.venues.Count; i++) //each (var item in Model.venues)

@@ -66,6 +66,7 @@ namespace EventPlanner.Controllers
             ViewBag.VenueId = new SelectList(db.Venues, "Id", "Name", entertainment.VenueId);
             return View(entertainment);
         }
+        //Get: Promoter/CreateVenue
         public ActionResult CreateVenue(int? Id)
         {
             ViewBag.Id = Id;
@@ -212,6 +213,7 @@ namespace EventPlanner.Controllers
             }
             return View(venue_entertainment);
         }
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
