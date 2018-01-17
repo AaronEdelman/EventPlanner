@@ -78,16 +78,8 @@ namespace EventPlanner.Controllers
         public ActionResult Create()
         {
             GroupCreateViewModel groupCreateModel = new GroupCreateViewModel();
-            //groupCreateModel.CurrentUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            //foreach (Event eve in db.Events)
-            //{
-            //    groupCreateModel.AllEvents.Add(eve);
-            //}
-
-
-            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name");
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
-            ViewBag.EventId = new SelectList(db.Events, "Id", "Name");
+            groupCreateModel.CurrentUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            groupCreateModel.Events = new SelectList(db.Events, "Id", "Name");
 
             return View(groupCreateModel);
         }
@@ -102,16 +94,18 @@ namespace EventPlanner.Controllers
         {
             if (ModelState.IsValid)
             {
-                var newGroup = new Group{ Name = model.GroupName };
+                var newGroup = new Group{ Name = model.Group.Name };
                 var newUserToGroup = new UserToGroup { UserId = model.CurrentUserId, GroupId = newGroup.Id };
+                var newGroupToEvent = new GroupToEvents { GroupId = newGroup.Id, EventId = model.Event.Id };
                 db.Groups.Add(newGroup);
                 db.UserToGroups.Add(newUserToGroup);
+                db.GroupToEvents.Add(newGroupToEvent);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name");
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
+            ViewBag.EventId = new SelectList(db.Events, "Id", "Name");
             return View();
         }
 

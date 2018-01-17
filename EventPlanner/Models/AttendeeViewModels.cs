@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace EventPlanner.Models
 {
@@ -15,11 +16,14 @@ namespace EventPlanner.Models
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Group Name")]
-        public string GroupName { get; set; }
+        public Group Group{ get; set; }
 
         [Required]
+        [Display(Name = "Event")]
+        public Event Event { get; set; }
+
         [Display(Name = "Events")]
-        public string EventName { get; set; }
+        public SelectList Events { get; set; }
     }
 
     public class GroupEditViewModel
