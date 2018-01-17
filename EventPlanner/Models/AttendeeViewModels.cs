@@ -10,13 +10,16 @@ namespace EventPlanner.Models
     {
         [Required]
         [Display(Name = "User Name")]
-        public string UserId { get; set; }
+        public string CurrentUserId { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Group Name")]
-        public string Name { get; set; }
+        public string GroupName { get; set; }
 
+        [Required]
+        [Display(Name = "Events")]
+        public string EventName { get; set; }
     }
 
     public class GroupEditViewModel

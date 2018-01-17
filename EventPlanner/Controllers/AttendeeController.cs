@@ -77,9 +77,19 @@ namespace EventPlanner.Controllers
         // GET: Attendee/Create
         public ActionResult Create()
         {
+            GroupCreateViewModel groupCreateModel = new GroupCreateViewModel();
+            //groupCreateModel.CurrentUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            //foreach (Event eve in db.Events)
+            //{
+            //    groupCreateModel.AllEvents.Add(eve);
+            //}
+
+
             ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name");
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
-            return View();
+            ViewBag.EventId = new SelectList(db.Events, "Id", "Name");
+
+            return View(groupCreateModel);
         }
 
         // POST: Attendee/Create
@@ -92,8 +102,8 @@ namespace EventPlanner.Controllers
         {
             if (ModelState.IsValid)
             {
-                var newGroup = new Group{ Name = model.Name };
-                var newUserToGroup = new UserToGroup { UserId = model.UserId, GroupId = newGroup.Id };
+                var newGroup = new Group{ Name = model.GroupName };
+                var newUserToGroup = new UserToGroup { UserId = model.CurrentUserId, GroupId = newGroup.Id };
                 db.Groups.Add(newGroup);
                 db.UserToGroups.Add(newUserToGroup);
                 db.SaveChanges();
@@ -175,6 +185,7 @@ namespace EventPlanner.Controllers
                 if (DeleteGroupModel.Group.Id == group.Id)
                 {
                     db.Groups.Remove(group);
+                    break;
                 }
             }
             foreach (UserToGroup userToGroup in db.UserToGroups)
@@ -182,6 +193,13 @@ namespace EventPlanner.Controllers
                 if (DeleteGroupModel.Group.Id == userToGroup.GroupId)
                 {
                     db.UserToGroups.Remove(userToGroup);
+                }
+            }
+            foreach (EntertainmentPreference entertainmentPreferenceRow in db.EntertainmentPreferences)
+            {
+                if (DeleteGroupModel.Group.Id == entertainmentPreferenceRow.GroupId)
+                {
+                    db.EntertainmentPreferences.Remove(entertainmentPreferenceRow);
                 }
             }
             db.SaveChanges();
