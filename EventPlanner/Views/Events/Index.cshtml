@@ -90,7 +90,6 @@
                 @Html.DisplayFor(modelItem => item.ZipCode)
             </td>
             <td>
-                @if (User.IsInRole("Promoter"))
                 {
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id })
                     <br />

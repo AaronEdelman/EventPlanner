@@ -68,7 +68,7 @@ namespace EventPlanner.Controllers
             var UserToGroupToRemove = db.UserToGroups.Find(idToSearch);
             db.UserToGroups.Remove(UserToGroupToRemove);
             db.SaveChanges();
-            return View("Details");
+            return RedirectToAction("Details", new { id = groupId });
 
         }
 
