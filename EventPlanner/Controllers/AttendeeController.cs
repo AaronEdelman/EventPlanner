@@ -22,7 +22,7 @@ namespace EventPlanner.Controllers
             var AttendeeGroupModel = new AttendeeGroupViewModel();
             var currentUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             var acceptedGroups = (from x in db.UserToGroups where x.UserId == currentUserId && x.AcceptedInvite == true select x.Group).ToList();
-            var invitedGroups = (from x in db.UserToGroups where x.UserId == currentUserId && x.AcceptedInvite == false select x).ToList();
+            var invitedGroups = (from x in db.UserToGroups where x.UserId == currentUserId && x.AcceptedInvite == false select x.Group).ToList();
             AttendeeGroupModel.CurrentGroups = acceptedGroups;
             AttendeeGroupModel.Invites = invitedGroups;
             AttendeeGroupModel.User = db.Users.Find(currentUserId);
