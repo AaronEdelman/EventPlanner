@@ -13,7 +13,11 @@ namespace EventPlanner.Controllers
 {
     public class PromoterController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        ApplicationDbContext db;
+        public PromoterController()
+        {
+              db = new ApplicationDbContext();
+        }
 
         // GET: Promoter
         public ActionResult Index()
@@ -40,8 +44,10 @@ namespace EventPlanner.Controllers
         [HttpGet]
         public ActionResult CreateEntertainment(int id)
         {
-            var EntertainmentModel = new CreateEntertainmentViewModel();
-            EntertainmentModel.PreMadeVenues = new List<Venue>();
+            var EntertainmentModel = new CreateEntertainmentViewModel
+            {
+                PreMadeVenues = new SelectList(db.Venues, "Id", "Name")
+            };
             var currentUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             foreach (ApplicationUser user in db.Users)
             {
@@ -55,15 +61,9 @@ namespace EventPlanner.Controllers
                 if (foundEvent.Id == id)
                 {
                     EntertainmentModel.CurrentEvent = foundEvent;
-                    foreach (Venue venue in db.Venues)
-                    {
-                        if (venue.Event == foundEvent)
-                        {
-                            EntertainmentModel.PreMadeVenues.Add(venue);
-                        }
+                    EntertainmentModel.CurrentEventId = foundEvent.Id;
                     }
                 }
-            }
             return View(EntertainmentModel);
 
         }
@@ -78,30 +78,47 @@ namespace EventPlanner.Controllers
                 StartDate = createEntertainmentViewModel.CurrentEntertainment.StartDate,
                 EndDate = createEntertainmentViewModel.CurrentEntertainment.EndDate,
                 Restriction = createEntertainmentViewModel.CurrentEntertainment.Restriction,
-                VenueId = createEntertainmentViewModel.VenueId,
-                Event = createEntertainmentViewModel.CurrentEvent
+                VenueId = createEntertainmentViewModel.CurrentVenueId,
+                EventId = createEntertainmentViewModel.CurrentEventId,
             };
             db.Entertainments.Add(newEntertainment);
-            return RedirectToAction("Create", "Promoter");
+            db.SaveChanges();
+            return RedirectToAction("Index", "Events");
 
         }
-        // POST: Promoter/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateVenue([Bind(Include = "Id,Name,EventId")] Venue venue, int Id)
+        [HttpGet]
+        public ActionResult CreateVenue(int id)
         {
-            if (ModelState.IsValid)
+            var newCreateVenueModel = new CreateVenueViewModel
             {
-                venue.EventId = Id;
-                db.Venues.Add(venue);
-                db.SaveChanges();
-                return RedirectToAction("Create", "Promoter", Id);
+                IdOfEvent = id
+            };
+            return View(newCreateVenueModel);
+        }
+        [HttpPost]
+        public ActionResult CreateVenue(CreateVenueViewModel model)
+        {
+            var newVenue = new Venue
+            {
+                Name = model.CurrentVenue.Name,
+                Latitude = model.CurrentVenue.Latitude,
+                Longitude = model.CurrentVenue.Longitude,
+                IsDisabledFriendly = model.CurrentVenue.IsDisabledFriendly,
+                IsOutdoors = model.CurrentVenue.IsOutdoors,
+                HasSeating = model.CurrentVenue.HasSeating,
+            };
+            foreach(Event foundEvent in db.Events)
+            {
+                if (foundEvent.Id == model.IdOfEvent)
+                {
+                    newVenue.Event = foundEvent;
+                }
             }
+            int eventId = model.IdOfEvent;
+            db.Venues.Add(newVenue);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Events", new { id = eventId });
 
-            ViewBag.EventId = new SelectList(db.Events, "Id", "Name", venue.EventId);
-            return View(venue);
         }
         // GET: Promoter/Edit/5
         public ActionResult Edit(int? id)
@@ -202,6 +219,32 @@ namespace EventPlanner.Controllers
             
             return View(newEvent);
         }
+
+        public ActionResult ViewVenues(int Id)
+        {
+            var viewVenuesViewModel = new ViewVenuesViewModel();
+            viewVenuesViewModel.UserVenues = new List<Venue>();
+            //try
+            //{
+                foreach (Venue venue in db.Venues)
+                {
+                    if (Id == venue.Id)
+                    {
+                        viewVenuesViewModel.UserVenues.Add(venue);
+                    }
+                }
+
+            return View(viewVenuesViewModel);
+        }
+
+            //}
+            //catch
+            //{
+            //    return RedirectToAction("Index", "Events", new { id = Id });
+        //    //}
+
+        //}
+
         ////GET: Promoter/View_Venues_Shows
         //public ActionResult View_Venues(int Id)
         //{

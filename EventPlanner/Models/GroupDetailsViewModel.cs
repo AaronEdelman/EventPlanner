@@ -5,9 +5,9 @@ using System.Web;
 
 namespace EventPlanner.Models
 {
-    public class CreateVenueViewModel
+    public class GroupDetailsViewModel
     {
-        public Venue CurrentVenue { get; set; }
-        public int IdOfEvent { get; set; }
+
+
     }
 }

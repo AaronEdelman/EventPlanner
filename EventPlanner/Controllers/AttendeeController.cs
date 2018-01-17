@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EventPlanner.Models;
+using Microsoft.AspNet.Identity;
 
 namespace EventPlanner.Controllers
 {
@@ -15,10 +16,44 @@ namespace EventPlanner.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Attendee
+        [Authorize]
         public ActionResult Index()
         {
-            var userToGroups = db.UserToGroups.Include(u => u.Group).Include(u => u.User);
-            return View(userToGroups.ToList());
+            var AttendeeGroupModel = new AttendeeGroupViewModel();
+            var currentUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var groups = (from x in db.UserToGroups where x.UserId == currentUserId select x.Group).ToList();
+            AttendeeGroupModel.CurrentGroups = groups;
+            AttendeeGroupModel.User = db.Users.Find(currentUserId);
+            foreach(ApplicationUser user in db.Users)
+            {
+                if (user.Id == currentUserId)
+                {
+                    AttendeeGroupModel.User = user;
+                }
+            }
+            return View(AttendeeGroupModel);
+        }
+        
+        public ActionResult RemoveMemberFromGroup(string userId, int groupId)
+        {
+            var idSearched = (from row in db.UserToGroups where row.UserId == userId && row.GroupId == groupId select row.Id);
+            int idToSearch = idSearched.First();
+            var UserToGroupToRemove = db.UserToGroups.Find(idToSearch);
+            db.UserToGroups.Remove(UserToGroupToRemove);
+            db.SaveChanges();
+            return View("Details");
+
+        }
+
+        public ActionResult RemoveEventFromGroup(int eventId, int groupId)
+        {
+            var idsearched = (from row in db.GroupToEvents where row.EventId == eventId && row.GroupId == groupId select row.Id);
+            int idToSearch = idsearched.First();
+            var GroupToEventsToRemove = db.GroupToEvents.Find(idToSearch);
+            db.GroupToEvents.Remove(GroupToEventsToRemove);
+            db.SaveChanges();
+            return View("Details");
+
         }
 
         // GET: Attendee/Details/5
@@ -28,12 +63,15 @@ namespace EventPlanner.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserToGroup userToGroup = db.UserToGroups.Find(id);
-            if (userToGroup == null)
-            {
-                return HttpNotFound();
-            }
-            return View(userToGroup);
+            GroupToEventsViewModel GroupToEvents = new GroupToEventsViewModel();
+            Group Group = db.Groups.Find(id);            
+            var users = (from row in db.UserToGroups where row.GroupId == id select row.User).ToList();
+            var events = (from row in db.GroupToEvents where row.GroupId == id select row.Event).ToList();
+            GroupToEvents.Group = Group;
+            GroupToEvents.CurrentUsers = users;
+            GroupToEvents.Events = events;
+
+            return View(GroupToEvents);
         }
 
         // GET: Attendee/Create
@@ -49,18 +87,22 @@ namespace EventPlanner.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,UserId,GroupId")] UserToGroup userToGroup)
+        public ActionResult Create(GroupCreateViewModel model)
+        //public ActionResult Create([Bind(Include = "Id,UserId,GroupId")] UserToGroup userToGroup)
         {
             if (ModelState.IsValid)
             {
-                db.UserToGroups.Add(userToGroup);
+                var newGroup = new Group{ Name = model.Name };
+                var newUserToGroup = new UserToGroup { UserId = model.UserId, GroupId = newGroup.Id };
+                db.Groups.Add(newGroup);
+                db.UserToGroups.Add(newUserToGroup);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name", userToGroup.GroupId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email", userToGroup.UserId);
-            return View(userToGroup);
+            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name");
+            ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
+            return View();
         }
 
         // GET: Attendee/Edit/5
@@ -70,14 +112,20 @@ namespace EventPlanner.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserToGroup userToGroup = db.UserToGroups.Find(id);
-            if (userToGroup == null)
+            else
             {
-                return HttpNotFound();
-            }
-            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name", userToGroup.GroupId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email", userToGroup.UserId);
-            return View(userToGroup);
+                var GroupToAttendees = new GroupToAttendeesViewModel();
+                foreach(Group group in db.Groups)
+                {
+                    if(group.Id == id)
+                    {
+                        GroupToAttendees.Group = group;
+                    }
+                }
+                var currentUsers = (from row in db.UserToGroups where row.GroupId == id select row.User).ToList();
+                GroupToAttendees.CurrentUsers = currentUsers;
+                return View(GroupToAttendees);
+            }            
         }
 
         // POST: Attendee/Edit/5
@@ -85,11 +133,14 @@ namespace EventPlanner.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserId,GroupId")] UserToGroup userToGroup)
+        public ActionResult Edit(GroupEditViewModel model, UserToGroup userToGroup, int? id)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(userToGroup).State = EntityState.Modified;
+                var groupToUpdate = db.Groups.Find(db.UserToGroups.Find(userToGroup.Id).GroupId);
+                var userToGroupToUpdate = db.UserToGroups.Find(userToGroup.Id);
+                userToGroupToUpdate.GroupId = groupToUpdate.Id;
+                groupToUpdate.Name = model.Name;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -99,29 +150,39 @@ namespace EventPlanner.Controllers
         }
 
         // GET: Attendee/Delete/5
-        public ActionResult Delete(int? id)
+        [HttpGet]
+        public ActionResult DeleteGroup(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserToGroup userToGroup = db.UserToGroups.Find(id);
-            if (userToGroup == null)
-            {
-                return HttpNotFound();
-            }
-            return View(userToGroup);
+            DeleteGroupViewModel DeleteGroupModel = new DeleteGroupViewModel();
+            DeleteGroupModel.Group = db.Groups.Find(id);     
+            return View(DeleteGroupModel);
         }
 
         // POST: Attendee/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteGroup(DeleteGroupViewModel DeleteGroupModel)
         {
-            UserToGroup userToGroup = db.UserToGroups.Find(id);
-            db.UserToGroups.Remove(userToGroup);
+            var groupToEventsQuery = from row in db.GroupToEvents where row.GroupId == DeleteGroupModel.Group.Id select row;
+            var groupsQuery = from row in db.Groups where row.Id == DeleteGroupModel.Group.Id select row;
+            var userToGroupsQuery = from row in db.UserToGroups where row.GroupId == DeleteGroupModel.Group.Id select row;
+            DeleteGroupModel.GroupToEventsToDelete = groupToEventsQuery.ToList();
+            DeleteGroupModel.GroupsToDelete = groupsQuery.ToList();
+            DeleteGroupModel.UserToGroupsToDelete = userToGroupsQuery.ToList();
+            foreach (UserToGroup userToGroup in DeleteGroupModel.UserToGroupsToDelete )
+            {
+                db.UserToGroups.Remove(userToGroup);
+            }
+            foreach (Group group in DeleteGroupModel.GroupsToDelete)
+            {
+                db.Groups.Remove(group);
+            }
+            foreach (GroupToEvents groupToEvent in DeleteGroupModel.GroupToEventsToDelete)
+            {
+                db.GroupToEvents.Remove(groupToEvent);
+            }
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Attendee");
         }
 
         protected override void Dispose(bool disposing)

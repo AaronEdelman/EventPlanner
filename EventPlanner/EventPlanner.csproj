@@ -207,25 +207,36 @@
     <Compile Include="Migrations\201801122208512_AddedOtherModels.Designer.cs">
       <DependentUpon>201801122208512_AddedOtherModels.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801151412479_AddedAddressInformationToEvent.cs" />
-    <Compile Include="Migrations\201801151412479_AddedAddressInformationToEvent.Designer.cs">
-      <DependentUpon>201801151412479_AddedAddressInformationToEvent.cs</DependentUpon>
+    <Compile Include="Migrations\201801161354029_AddingInGroupToEventsTable.cs" />
+    <Compile Include="Migrations\201801161354029_AddingInGroupToEventsTable.Designer.cs">
+      <DependentUpon>201801161354029_AddingInGroupToEventsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801170435111_Added IsOutdoors, IsDisabledFriendly, and IsAgeEighteenPlus bools to the entertainment table.cs" />
+    <Compile Include="Migrations\201801170435111_Added IsOutdoors, IsDisabledFriendly, and IsAgeEighteenPlus bools to the entertainment table.Designer.cs">
+      <DependentUpon>201801170435111_Added IsOutdoors, IsDisabledFriendly, and IsAgeEighteenPlus bools to the entertainment table.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\CreateEntertainmentViewModel.cs" />
     <Compile Include="Models\CreateVenueViewModel.cs" />
+    <Compile Include="Models\DeleteGroupViewModel.cs" />
+    <Compile Include="Models\GroupDetailsViewModel.cs" />
+    <Compile Include="Models\GroupToAttendeesViewModel.cs" />
+    <Compile Include="Models\AttendeeGroupViewModel.cs" />
+    <Compile Include="Models\AttendeeViewModels.cs" />
     <Compile Include="Models\Entertainment.cs" />
     <Compile Include="Models\EntertainmentPreference.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\GroupToEvents.cs" />
+    <Compile Include="Models\GroupToEventsViewModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UserToGroup.cs" />
     <Compile Include="Models\Venue.cs" />
-    <Compile Include="Models\Venue_Entertainment.cs" />
+    <Compile Include="Models\ViewVenuesViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -238,7 +249,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\eventBlurredCrowd.png" />
+    <Content Include="Images\eventInvisBg.png" />
+    <Content Include="Images\favicon.ico" />
+    <Content Include="Images\logo2.png" />
     <Content Include="Images\stars.gif" />
     <Content Include="Images\starBackGround.jpg" />
     <Content Include="Images\stars.jpg" />
@@ -299,8 +312,8 @@
     <Content Include="Views\Promoter\Details.cshtml" />
     <Content Include="Views\Promoter\Edit.cshtml" />
     <Content Include="Views\Promoter\Index.cshtml" />
-    <Content Include="Views\Attendee\Create.cshtml" />
-    <Content Include="Views\Attendee\Delete.cshtml" />
+    <Content Include="Views\Attendee\CreateOG.cshtml" />
+    <Content Include="Views\Attendee\DeleteGroup.cshtml" />
     <Content Include="Views\Attendee\Details.cshtml" />
     <Content Include="Views\Attendee\Edit.cshtml" />
     <Content Include="Views\Attendee\Index.cshtml" />
@@ -316,8 +329,9 @@
     <Content Include="Views\Events\Edit.cshtml" />
     <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\Promoter\CreateVenue.cshtml" />
-    <Content Include="Views\Promoter\View_Venues.cshtml" />
+    <Content Include="Views\Attendee\Create.cshtml" />
     <Content Include="Views\Promoter\CreateEntertainment.cshtml" />
+    <Content Include="Views\Promoter\ViewVenues.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -342,8 +356,11 @@
     <EmbeddedResource Include="Migrations\201801122208512_AddedOtherModels.resx">
       <DependentUpon>201801122208512_AddedOtherModels.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801151412479_AddedAddressInformationToEvent.resx">
-      <DependentUpon>201801151412479_AddedAddressInformationToEvent.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201801161354029_AddingInGroupToEventsTable.resx">
+      <DependentUpon>201801161354029_AddingInGroupToEventsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801170435111_Added IsOutdoors, IsDisabledFriendly, and IsAgeEighteenPlus bools to the entertainment table.resx">
+      <DependentUpon>201801170435111_Added IsOutdoors, IsDisabledFriendly, and IsAgeEighteenPlus bools to the entertainment table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

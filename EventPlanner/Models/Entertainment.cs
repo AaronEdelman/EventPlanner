@@ -22,6 +22,11 @@ namespace EventPlanner.Models
         [Display(Name = "End Date")]
         public DateTime EndDate { get; set; }
         public string Restriction { get; set; }
+
+        public bool IsOutdoors { get; set; }
+        public bool IsDisabledFriendly { get; set; }
+        public bool IsAgeEighteenPlus { get; set; }
+
         [Required(ErrorMessage = "Venue is required.")]
         public int VenueId { get; set; }
         [ForeignKey("VenueId")]

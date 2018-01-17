@@ -7,13 +7,13 @@ namespace EventPlanner.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class AddedAddressInformationToEvent : IMigrationMetadata
+    public sealed partial class AddedIsOutdoorsIsDisabledFriendlyandIsAgeEighteenPlusboolstotheentertainmenttable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedAddressInformationToEvent));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedIsOutdoorsIsDisabledFriendlyandIsAgeEighteenPlusboolstotheentertainmenttable));
         
         string IMigrationMetadata.Id
         {
-            get { return "201801151412479_AddedAddressInformationToEvent"; }
+            get { return "201801170435111_Added IsOutdoors, IsDisabledFriendly, and IsAgeEighteenPlus bools to the entertainment table"; }
         }
         
         string IMigrationMetadata.Source

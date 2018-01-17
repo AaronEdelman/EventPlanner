@@ -1,0 +1,33 @@
+﻿@model EventPlanner.Models.ViewVenuesViewModel
+@{
+    ViewBag.Title = "ViewVenues";
+}
+<head>
+    <style>
+
+        p {
+            text-indent: 50px;
+        }
+    </style>
+</head>
+
+<h2>View Venues</h2>
+
+<table class="table">
+    @foreach (var venue in Model.UserVenues)
+    {
+        <tr>
+            <th>
+                <label> @venue.Name </label>
+                @foreach (var entertainment in Model.UserEntertainment)
+                {
+                    if (venue.Id == entertainment.VenueId)
+                    {
+                        <p> @entertainment.Name</p>
+                    }
+                }
+            </th>
+        </tr>
+    }
+    @Html.ActionLink("Back to List", "Index")
+</table>
