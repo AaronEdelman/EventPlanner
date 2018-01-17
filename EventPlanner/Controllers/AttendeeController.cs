@@ -234,7 +234,7 @@ namespace EventPlanner.Controllers
             entertainments.entertainments = new List<Entertainment>();
             var EventId = (from x in db.GroupToEvents where x.GroupId == GroupId select x.EventId);
             int firstEventId = EventId.AsQueryable().First();
-            foreach (var entertainment in db.Entertainments.Include(e => e.Venue))
+            foreach (var entertainment in db.Entertainments.Include(e => e.Venue))  
             {
                 if (entertainment.EventId == firstEventId)
                 {
