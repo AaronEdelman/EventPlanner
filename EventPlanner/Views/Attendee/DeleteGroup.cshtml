@@ -12,7 +12,8 @@
 <h3>Are you sure you want to delete this group?</h3>
 <div>
     <hr />
-            
+            @Html.HiddenFor(m => m.Group.Id)
+            @*Check Joe's Trash Collector / Add Pickup Hidden Form. @Html.HiddenFor Look Into / How to put information in it*@
             <input type="submit" name="Delete" value="Submit" class="btn btn-default" /> |
             @Html.ActionLink("Back to List", "Index")
 

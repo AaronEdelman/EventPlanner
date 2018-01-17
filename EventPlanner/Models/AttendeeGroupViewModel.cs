@@ -9,6 +9,7 @@ namespace EventPlanner.Models
     {
         public ApplicationUser User { get; set; }
         public List<Group> CurrentGroups { get; set; }
+        public List<UserToGroup> Invites { get; set; }
 
     }
 }

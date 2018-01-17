@@ -213,12 +213,13 @@
     <Compile Include="Migrations\201801161354029_AddingInGroupToEventsTable.Designer.cs">
       <DependentUpon>201801161354029_AddingInGroupToEventsTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801170435111_Added IsOutdoors, IsDisabledFriendly, and IsAgeEighteenPlus bools to the entertainment table.cs" />
-    <Compile Include="Migrations\201801170435111_Added IsOutdoors, IsDisabledFriendly, and IsAgeEighteenPlus bools to the entertainment table.Designer.cs">
-      <DependentUpon>201801170435111_Added IsOutdoors, IsDisabledFriendly, and IsAgeEighteenPlus bools to the entertainment table.cs</DependentUpon>
+    <Compile Include="Migrations\201801172243338_InstructorTest.cs" />
+    <Compile Include="Migrations\201801172243338_InstructorTest.Designer.cs">
+      <DependentUpon>201801172243338_InstructorTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddEventToGroupViewModel.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\CreateEntertainmentViewModel.cs" />
     <Compile Include="Models\CreateVenueViewModel.cs" />
@@ -340,6 +341,7 @@
     <Content Include="Views\Promoter\ViewVenues.cshtml" />
     <Content Include="Views\WeatherEx.cshtml" />
     <Content Include="Views\Attendee\InviteToGroup.cshtml" />
+    <Content Include="Views\Attendee\AddEventToGroup.cshtml" />
     <Content Include="Views\Attendee\Vote.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -367,8 +369,8 @@
     <EmbeddedResource Include="Migrations\201801161354029_AddingInGroupToEventsTable.resx">
       <DependentUpon>201801161354029_AddingInGroupToEventsTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801170435111_Added IsOutdoors, IsDisabledFriendly, and IsAgeEighteenPlus bools to the entertainment table.resx">
-      <DependentUpon>201801170435111_Added IsOutdoors, IsDisabledFriendly, and IsAgeEighteenPlus bools to the entertainment table.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201801172243338_InstructorTest.resx">
+      <DependentUpon>201801172243338_InstructorTest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -9,6 +9,27 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+<table class="table">
+    <tr>
+        <th scope="col">Invites </th>
+    </tr>
+
+    @foreach (var invite in Model.Invites)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => invite.Group)
+            </td>
+            <td>
+                @Html.ActionLink("Accept", "AcceptGroupInvite", new { id = invite.Id }) |
+                @Html.ActionLink("Decline", "DeclineGroupInvite", new { id = invite.Id }) |
+            </td>
+        </tr>
+    }
+
+</table>
+
 <table class="table">
     <tr>
         <th scope="col">Group Name </th>
@@ -20,10 +41,17 @@
             @Html.DisplayFor(modelItem => group.Name)
         </td>
         <td>
+<<<<<<< HEAD
+            @Html.ActionLink("Group Details", "Details", new { id=group.Id })            |
+            @Html.ActionLink("Invite Members", "InviteToGroup", new { id = group.Id })
+            @Html.ActionLink("Leave Group", "LeaveGroup", new { userId = Model.User.Id, groupId = group.Id})
+            @Html.ActionLink("Delete Group", "DeleteGroup", new { id = group.Id })
+=======
             @Html.ActionLink("Details", "Details", new { id = group.Id }) |
             @Html.ActionLink("Delete", "DeleteGroup", new { id = group.Id }) |
             @Html.ActionLink("Invite", "InviteToGroup", new { id = group.Id })
             @Html.ActionLink("Vote For Shows", "Vote", new { GroupId = group.Id })
+>>>>>>> f4c3e9ffe3287b33e1fc3cb1bec5888f02f615ef
         </td>
     </tr>
 }
