@@ -36,6 +36,15 @@ namespace EventPlanner.Controllers
             return View(AttendeeGroupModel);
         }
 
+        public ActionResult LeaveGroup (string userId, int? groupId)
+        {
+
+            UserToGroup userToGroupToRemove = (from row in db.UserToGroups where row.UserId == userId && row.GroupId == groupId select row).First();
+            db.UserToGroups.Remove(userToGroupToRemove);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         public ActionResult AcceptGroupInvite (int? id)
         {
             db.UserToGroups.Find(id).AcceptedInvite = true;
@@ -63,6 +72,28 @@ namespace EventPlanner.Controllers
 
         }
 
+        //GET
+        public ActionResult AddEventToGroup(int? groupId)
+        {
+            AddEventToGroupViewModel addEventToGroupModel = new AddEventToGroupViewModel();
+            addEventToGroupModel.Events = new SelectList(db.Events, "Id", "Name");
+            addEventToGroupModel.Group = db.Groups.Find(groupId);
+            return View(addEventToGroupModel);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult AddEventToGroup(AddEventToGroupViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                GroupToEvents groupToEventToAdd = new GroupToEvents { GroupId = model.Group.Id, EventId = model.Event.Id };
+                db.GroupToEvents.Add(groupToEventToAdd);
+                db.SaveChanges();                
+            }
+            return RedirectToAction("Index");
+        }
+
         public ActionResult RemoveEventFromGroup(int eventId, int groupId)
         {
             var idsearched = (from row in db.GroupToEvents where row.EventId == eventId && row.GroupId == groupId select row.Id);
@@ -70,7 +101,7 @@ namespace EventPlanner.Controllers
             var GroupToEventsToRemove = db.GroupToEvents.Find(idToSearch);
             db.GroupToEvents.Remove(GroupToEventsToRemove);
             db.SaveChanges();
-            return View("Details");
+            return RedirectToAction("Index");
 
         }
 

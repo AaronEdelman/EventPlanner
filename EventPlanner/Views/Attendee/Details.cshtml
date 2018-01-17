@@ -33,6 +33,7 @@
     </table>
 
     <table class="table">
+        @Html.ActionLink("Add", "AddEventToGroup", new { groupId = Model.Group.Id })
         <thead>
             <tr>
                 <th>Event Name</th>
