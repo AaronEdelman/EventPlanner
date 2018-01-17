@@ -57,7 +57,7 @@
     </div>
 
 
-    <!DOCTYPE html>
+    @*<!DOCTYPE html>
 
     <html xmlns="http://www.w3.org/1999/xhtml">
     <head runat="server">
@@ -91,12 +91,7 @@
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 }
                 map = new google.maps.Map(document.getElementById("gmap"), myOptions);
-                // marker refers to a global variable
-                var marker
-                    = new google.maps.Marker({
-                        //position: myLatlng,
-                        map: map
-                    });
+                var marker = new google.maps.Marker({map: map});
                 // if center changed then update lat and lon document objects
                 //google.maps.event.addListener(map, 'center_changed', function () {
                 //    var location = map.getCenter();
@@ -126,8 +121,9 @@
                     } else {
                         marker = new google.maps.Marker({
                             position: location,
-                            map: map
+                            map: map,
                         });
+                        return marker;
                     }
                 }
 
@@ -148,20 +144,17 @@
                     var lat = event.latLng.lat();
                     //document.getElementById('Latitude') = lat;
                     return lat;
+                    var long = event.latlng.lng();
+                    return long;
                     //document.getElementById('Longitude') = long;
                     alert("Latitude: " + event.latLng.lat() + " " + ", longitude: " + event.latLng.lng());
                 });
-
+                var data = { id: marker.}
             }
             window.onload = function () { initialize() };
+
         </script>
-        <style>
-            div#gmap {
-                width: 40%;
-                height: 500px;
-                border: double;
-            }
-        </style>
+
     </head>
 
     <body>
@@ -178,4 +171,4 @@
         </form>
     </body>
 
-</html>
+</html>*@

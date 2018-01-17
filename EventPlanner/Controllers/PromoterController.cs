@@ -224,6 +224,7 @@ namespace EventPlanner.Controllers
         {
             var viewVenuesViewModel = new ViewVenuesViewModel();
             viewVenuesViewModel.UserVenues = new List<Venue>();
+            viewVenuesViewModel.UserEntertainment = new List<Entertainment>();
             //try
             //{
             foreach (Venue venue in db.Venues)
@@ -231,6 +232,13 @@ namespace EventPlanner.Controllers
                 if (Id == venue.Id)
                 {
                     viewVenuesViewModel.UserVenues.Add(venue);
+                }
+            }
+            foreach (Entertainment entertainment in db.Entertainments)
+            {
+                if(Id == entertainment.EventId)
+                {
+                    viewVenuesViewModel.UserEntertainment.Add(entertainment);
                 }
             }
             return View(viewVenuesViewModel);
