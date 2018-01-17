@@ -15,8 +15,8 @@
         }
         else if (User.IsInRole("Attendee"))
         {
-            <li> @Html.ActionLink("My Groups", "Groups", "Attendee")</li>
-            <li>@Html.ActionLink("My Events", "Evebts", "Attendee")</li>
+            <li> @Html.ActionLink("My Groups", "Index", "Attendee")</li>
+            <li>@Html.ActionLink("My Events", "Index", "Events")</li>
         }
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     }

@@ -239,6 +239,7 @@
     <Compile Include="Models\UserToGroup.cs" />
     <Compile Include="Models\Venue.cs" />
     <Compile Include="Models\ViewVenuesViewModel.cs" />
+    <Compile Include="Models\VoteViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Weather.cs" />
@@ -339,6 +340,7 @@
     <Content Include="Views\Promoter\ViewVenues.cshtml" />
     <Content Include="Views\WeatherEx.cshtml" />
     <Content Include="Views\Attendee\InviteToGroup.cshtml" />
+    <Content Include="Views\Attendee\Vote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

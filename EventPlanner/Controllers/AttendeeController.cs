@@ -225,5 +225,46 @@ namespace EventPlanner.Controllers
             }
             base.Dispose(disposing);
         }
+        //GET: /Attendee/Vote
+        [HttpGet]
+        public ActionResult Vote(int GroupId)
+        {
+
+            VoteViewModel entertainments = new VoteViewModel();
+            entertainments.entertainments = new List<Entertainment>();
+            var EventId = (from x in db.GroupToEvents where x.GroupId == GroupId select x.EventId);
+            int firstEventId = EventId.AsQueryable().First();
+            foreach (var entertainment in db.Entertainments.Include(e => e.Venue))
+            {
+                if (entertainment.EventId == firstEventId)
+                {
+                    entertainments.entertainments.Add(entertainment);
+                }
+            }
+            entertainments.group = db.Groups.Find(GroupId);
+            return View(entertainments);
+        }
+        //POST: /Attendee/Vote
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Vote(VoteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                foreach (Entertainment entertainment in model.entertainments)
+                {
+                    EntertainmentPreference preference = new EntertainmentPreference();
+                    preference.PreferenePoints = entertainment.VenueId; //Here VenueId is being used to hold points input from the view.  I'm so sorry.
+                    preference.GroupId = model.group.Id;
+                    preference.UserId = User.Identity.GetUserId();
+                    preference.EntertainmentId = entertainment.Id;
+                    db.EntertainmentPreferences.Add(preference);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return View(model);
+        }
     }
 }
