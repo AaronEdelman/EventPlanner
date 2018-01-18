@@ -47,7 +47,8 @@ namespace EventPlanner.Controllers
 
         public ActionResult AcceptGroupInvite (int? id)
         {
-            db.UserToGroups.Find(id).AcceptedInvite = true;
+            int userToGroupToAccept = (from x in db.UserToGroups where x.GroupId == id && x.AcceptedInvite == false select x.Id).First();
+            db.UserToGroups.Find(userToGroupToAccept).AcceptedInvite = true;
             db.SaveChanges();
             return RedirectToAction("Index");
 
@@ -55,7 +56,8 @@ namespace EventPlanner.Controllers
 
         public ActionResult DeclineGroupInvite (int? id)
         {
-            db.UserToGroups.Remove(db.UserToGroups.Find(id));
+            var userToGroupToDecline = (from x in db.UserToGroups where x.GroupId == id && x.AcceptedInvite == false select x).First();
+            db.UserToGroups.Remove(userToGroupToDecline);
             db.SaveChanges();
             return RedirectToAction("Index");
 
@@ -324,8 +326,8 @@ namespace EventPlanner.Controllers
                     preference.EntertainmentId = entertainment.Id;
                     db.EntertainmentPreferences.Add(preference);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
                 }
+                return RedirectToAction("Index");
             }
             return View(model);
         }

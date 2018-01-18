@@ -2,13 +2,13 @@
 @{
     ViewBag.Title = "Vote";
 }
-<h2>Allocate you preference points here.  You have 10 points to allocate to all of the shows at this event.</h2>
+<h2>Allocate you preference points here. <br /> You have 10 points to allocate to all of the shows at this event.</h2>
 
 
 @using (Html.BeginForm("Vote", "Attendee", FormMethod.Post))
 
 {
-    <table class="table">
+    <table class="table" style="color:#ffffff;">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.name.Name)

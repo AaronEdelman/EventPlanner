@@ -29,7 +29,7 @@ namespace EventPlanner.Controllers
             eventDetailsModel.EventVenues = new List<Venue>();
             foreach (Venue thisEventVenue in db.Venues)
             {
-                if (thisEventVenue.Id == eventDetailsModel.CurrentEvent.Id)
+                if (thisEventVenue.EventId == eventDetailsModel.CurrentEvent.Id)
                 {
                     eventDetailsModel.EventVenues.Add(thisEventVenue);
                 }

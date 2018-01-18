@@ -227,14 +227,14 @@ namespace EventPlanner.Controllers
             viewVenuesViewModel.UserEntertainment = new List<Entertainment>();
             //try
             //{
-            foreach (Venue venue in db.Venues.Include("Venue"))
+            foreach (Venue venue in db.Venues)
             {
-                if (Id == venue.Id)
+                if (Id == venue.EventId)
                 {
                     viewVenuesViewModel.UserVenues.Add(venue);
                 }
             }
-            foreach (Entertainment entertainment in db.Entertainments.Include("Entertainment"))
+            foreach (Entertainment entertainment in db.Entertainments)
             {
                 if(Id == entertainment.EventId)
                 {

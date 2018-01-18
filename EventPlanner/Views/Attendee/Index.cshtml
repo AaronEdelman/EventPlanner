@@ -42,11 +42,13 @@
             @Html.DisplayFor(modelItem => group.Name)
         </td>
         <td>
-            @Html.ActionLink("View Schedule", "Schedule", new { GroupId = group.Id })
+            @Html.ActionLink("Invite Members", "InviteToGroup", new { id = group.Id })            |
+            @Html.ActionLink("Vote For Shows", "Vote", new { GroupId = group.Id })            |
+            @Html.ActionLink("View Schedule", "Schedule", new { GroupId = group.Id })            |
             @Html.ActionLink("Group Details", "Details", new { id = group.Id })            |
-            @Html.ActionLink("Invite Members", "InviteToGroup", new { id = group.Id })
-            @Html.ActionLink("Leave Group", "LeaveGroup", new { userId = Model.User.Id, groupId = group.Id })
+            @Html.ActionLink("Leave Group", "LeaveGroup", new { userId = Model.User.Id, groupId = group.Id })            |
             @Html.ActionLink("Delete Group", "DeleteGroup", new { id = group.Id })
+
         </td>
     </tr>
 }
