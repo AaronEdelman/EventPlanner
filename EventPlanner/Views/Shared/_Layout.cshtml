@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
@@ -21,8 +22,14 @@
             })
         })
     </script>
-    <link runat ="server" rel="shortcut icon" href="~/Images/favicon.ico" type="image/x-icon" />
-    <link runat ="server" rel="icon" href="~/Images/favicon.ico" type="image/ico" />
+    <style>
+        #map {
+            height: 400px;
+            width: 400px;
+        }
+    </style>
+    <link runat="server" rel="shortcut icon" href="~/Images/favicon.ico" type="image/x-icon" />
+    <link runat="server" rel="icon" href="~/Images/favicon.ico" type="image/ico" />
 </head>
 <body>
     <div class="menu-icon">
@@ -52,11 +59,6 @@
             <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
         </ul>
     </div>
-
-
-
-
-
 
     <div class="container body-content">
         @RenderBody()

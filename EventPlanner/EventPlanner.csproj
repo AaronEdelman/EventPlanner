@@ -224,6 +224,7 @@
     <Compile Include="Models\CreateEntertainmentViewModel.cs" />
     <Compile Include="Models\CreateVenueViewModel.cs" />
     <Compile Include="Models\DeleteGroupViewModel.cs" />
+    <Compile Include="Models\EventDetialsViewModel.cs" />
     <Compile Include="Models\GroupDetailsViewModel.cs" />
     <Compile Include="Models\GroupToAttendeesViewModel.cs" />
     <Compile Include="Models\AttendeeGroupViewModel.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\GroupToEvents.cs" />
     <Compile Include="Models\GroupToEventsViewModel.cs" />
+    <Compile Include="Models\GroupVoteViewModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

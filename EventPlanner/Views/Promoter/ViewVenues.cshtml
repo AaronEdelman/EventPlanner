@@ -21,7 +21,7 @@
                 <label> @venue.Name </label>
                 @foreach (var entertainment in Model.UserEntertainment)
                 {
-                    if (venue.Id == entertainment.VenueId)
+                    if (entertainment.VenueId == venue.Id)
                     {
                         <p> @entertainment.Name</p>
                     }

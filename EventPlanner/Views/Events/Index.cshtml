@@ -63,10 +63,10 @@
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
+                @Html.DisplayFor(modelItem => item.StartTime.Hour)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EndTime)
+                @Html.DisplayFor(modelItem => item.EndTime.Hour)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Cost)
@@ -90,19 +90,17 @@
                 @Html.DisplayFor(modelItem => item.ZipCode)
             </td>
             <td>
-                {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                    <br />
-                    @Html.ActionLink("Details", "Details", new { id = item.Id })
-                    <br />
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    <br />
-                    @Html.ActionLink("Create Venue", "CreateVenue", "Promoter", new { id = item.Id }, null)
-                    <br />
-                    @Html.ActionLink("Add Entertainment", "CreateEntertainment", "Promoter", new { id = item.Id }, null)
-                    <br />
-                    @Html.ActionLink("View Venues", "ViewVenues", "Promoter", new { id = item.Id }, null)
-                }
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                <br />
+                @Html.ActionLink("Details", "Details", new { id = item.Id })
+                <br />
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                <br />
+                @Html.ActionLink("Create Venue", "CreateVenue", "Promoter", new { id = item.Id }, null)
+                <br />
+                @Html.ActionLink("Add Entertainment", "CreateEntertainment", "Promoter", new { id = item.Id }, null)
+                <br />
+                @Html.ActionLink("View Venues", "ViewVenues", "Promoter", new { id = item.Id }, null)
             </td>
         </tr>
     }

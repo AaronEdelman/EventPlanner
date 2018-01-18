@@ -24,16 +24,17 @@ namespace EventPlanner.Controllers
         // GET: Events/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            var eventDetailsModel = new EventDetialsViewModel();
+            eventDetailsModel.CurrentEvent= db.Events.Find(id);
+            eventDetailsModel.EventVenues = new List<Venue>();
+            foreach (Venue thisEventVenue in db.Venues)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (thisEventVenue.Id == eventDetailsModel.CurrentEvent.Id)
+                {
+                    eventDetailsModel.EventVenues.Add(thisEventVenue);
+                }
             }
-            Event @event = db.Events.Find(id);
-            if (@event == null)
-            {
-                return HttpNotFound();
-            }
-            return View(@event);
+            return View(eventDetailsModel);
         }
 
         // GET: Events/Create

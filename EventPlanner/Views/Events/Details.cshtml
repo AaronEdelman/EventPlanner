@@ -1,114 +1,141 @@
-﻿@model EventPlanner.Models.Event
+﻿@model EventPlanner.Models.EventDetialsViewModel
 
 @{
     ViewBag.Title = "Details";
 }
 
 <h2>Details</h2>
-
 <div>
     <h4>Event</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.CurrentEvent.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.CurrentEvent.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
+            @Html.DisplayNameFor(model => model.CurrentEvent.StartDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.StartDate)
+            @Html.DisplayFor(model => model.CurrentEvent.StartDate)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.EndDate)
+            @Html.DisplayNameFor(model => model.CurrentEvent.EndDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.EndDate)
+            @Html.DisplayFor(model => model.CurrentEvent.EndDate)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.StartTime)
+            @Html.DisplayNameFor(model => model.CurrentEvent.StartTime)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.StartTime)
+            @Html.DisplayFor(model => model.CurrentEvent.StartTime)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.EndTime)
+            @Html.DisplayNameFor(model => model.CurrentEvent.EndTime)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.EndTime)
+            @Html.DisplayFor(model => model.CurrentEvent.EndTime)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Cost)
+            @Html.DisplayNameFor(model => model.CurrentEvent.Cost)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Cost)
+            @Html.DisplayFor(model => model.CurrentEvent.Cost)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Weblink)
+            @Html.DisplayNameFor(model => model.CurrentEvent.Weblink)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Weblink)
+            @Html.DisplayFor(model => model.CurrentEvent.Weblink)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.AddressNumber)
+            @Html.DisplayNameFor(model => model.CurrentEvent.AddressNumber)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.AddressNumber)
+            @Html.DisplayFor(model => model.CurrentEvent.AddressNumber)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Street)
+            @Html.DisplayNameFor(model => model.CurrentEvent.Street)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Street)
+            @Html.DisplayFor(model => model.CurrentEvent.Street)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.City)
+            @Html.DisplayNameFor(model => model.CurrentEvent.City)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.City)
+            @Html.DisplayFor(model => model.CurrentEvent.City)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.State)
+            @Html.DisplayNameFor(model => model.CurrentEvent.State)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.State)
+            @Html.DisplayFor(model => model.CurrentEvent.State)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ZipCode)
+            @Html.DisplayNameFor(model => model.CurrentEvent.ZipCode)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ZipCode)
+            @Html.DisplayFor(model => model.CurrentEvent.ZipCode)
         </dd>
 
     </dl>
 </div>
+<div id="map"></div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CurrentEvent.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+                center: { lat: 43.038902, lng: -87.906471 }
+            });
+            setMarkers(map);
+        }
+        function setMarkers(map) {
+
+            var eventArray = @Html.Raw(Json.Encode(Model.EventVenues));
+
+            for (var i = 0; i < eventArray.length; i++) {
+                var venue = eventArray[i];
+                var marker = new google.maps.Marker({
+                    position: { lat: venue.Latitude, lng: venue.Longitude },
+                    map: map,
+                    title: venue.Name,
+                });
+            }
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOj_bzJdAHum3YvGRKtXyybAZynnBvRbM&callback=initMap">
+    </script>

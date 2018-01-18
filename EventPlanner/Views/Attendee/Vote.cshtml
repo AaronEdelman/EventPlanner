@@ -4,60 +4,109 @@
 }
 <h2>Allocate you preference points here.  You have 10 points to allocate to all of the shows at this event.</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.name.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.name.Venue)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.name.StartTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.name.EndTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.name.IsAgeEighteenPlus)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.name.IsDisabledFriendly)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.name.IsAgeEighteenPlus)
-        </th>
-        <th></th>
-    </tr>
-</table>
+
 @using (Html.BeginForm("Vote", "Attendee", FormMethod.Post))
+
 {
-    @Html.AntiForgeryToken()
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.name.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name.Venue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name.EndTime)
+            </th>
+            <th>
+                <label> 18+ Only</label>
+            </th>
+            <th>
+                <label>People With <br /> Disabilities Friendly</label>
+            </th>
+            <th>
+                <label>Outdoor Location </label>
+            </th>
+            <th>
+                <label> Points </label>
+            </th>
+            <th></th>
+        </tr>
 
-    for (int i = 0; i < Model.entertainments.Count; i++)
-    {
-        @Html.Display(Model.entertainments[i].Name)
-        @Html.Display(Model.entertainments[i].Venue.Name)
-        @Html.Display(Model.entertainments[i].StartTime.ToString())
-        @Html.Display(Model.entertainments[i].EndTime.ToString())
-        @Html.Display(Model.entertainments[i].IsAgeEighteenPlus.ToString())
-        @Html.Display(Model.entertainments[i].IsDisabledFriendly.ToString())
-        @Html.Display(Model.entertainments[i].IsAgeEighteenPlus.ToString())
+        @Html.AntiForgeryToken()
 
+        @for (int i = 0; i < Model.entertainments.Count; i++)
+        {
+            @Html.HiddenFor(model => Model.entertainments[i].Id)
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => m.entertainments[i].Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => m.entertainments[i].Venue.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => m.entertainments[i].StartTime.Hour)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => m.entertainments[i].EndTime.Hour)
+                </td>
+                <td>
+                    @if (Model.entertainments[i].IsAgeEighteenPlus == false)
+                    {
+                        <p> Yes</p>
+                    }
+                    else
+                    {
+                        <p> No </p>
+                    }
+                    @Html.HiddenFor(m => m.entertainments[i].IsAgeEighteenPlus)
+                </td>
+                <td>
+                    @if (Model.entertainments[i].IsDisabledFriendly == true)
+                    {
+                        <p>Yes </p>
+                    }
+                    else
+                    {
+                        <p> No </p>
+                    }
+                    @Html.HiddenFor(m => m.entertainments[i].IsDisabledFriendly)
+                </td>
+                <td>
+                    @if (Model.entertainments[i].IsOutdoors == true)
+                    {
+                        <p> Yes</p>
+                    }
+                    else
+                    {
+                        <p> No </p>
+                    }
+                    @Html.HiddenFor(m => m.entertainments[i].IsOutdoors)
+                </td>
+                <td>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => Model.entertainments[i].VenueId)
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
 
-        <div class="form-group">
-            <div class="col-md-10">
-                @Html.EditorFor(model => Model.entertainments[i].VenueId)
-            </div>
-        </div>
-        @Html.HiddenFor(model => Model.entertainments[i].Id)
-    }
     <div class="form-group">
         @Html.HiddenFor(model => model.group.Id)
     </div>
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-5">
+        <div class="col-md-10">
             <input type="submit" value="Create" class="btn btn-default" />
         </div>
     </div>
 }
+
+        }

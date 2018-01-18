@@ -43,160 +43,116 @@
                 </div>
             </div>
             @Html.HiddenFor(m => m.IdOfEvent)
+            @Html.HiddenFor(m => m.CurrentVenue.Latitude, new { @id = "latitude"})
+            @Html.HiddenFor(m => m.CurrentVenue.Longitude, new { @id = "longitude"})
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-5">
                     <input type="submit" value="CreateVenue" class="btn btn-default" label="CreateVenue" />
                 </div>
             </div>
         </div>
-        }
     </div>
-}
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
+@*<%@ Page Language="C#" AutoEventWireup="true" CodeFile="sample.aspx.cs" Inherits="sample" %>*@
 
-        #map {
-            height: 400px;
-            width: 100%;
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Show Google Map with Latitude and Longitude in asp.net website</title>
+    <style type="text/css">
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            vertical-align: top
+        }
+
+        #map_canvas {
+            height: 100%;
+        }
+    </style>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6v5-2uaq_wusHDktM9ILcqIrlPtnZgEk&sensor=false">
+    </script>
+    <script type="text/javascript">
+
+        function initialize() {
+            var myLatlng = new google.maps.LatLng(43.038902, -87.906471);
+            var myOptions = {
+                zoom: 7,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            map = new google.maps.Map(document.getElementById("gmap"), myOptions);
+            var marker
+                = new google.maps.Marker({
+                    map: map
+                });
+            google.maps.event.addListener(marker, 'dblclick', function () {
+                zoomLevel = map.getZoom() + 1;
+                if (zoomLevel == 20) {
+                    zoomLevel = 10;
+                }
+                document.getElementById("zoom_level").innerHTML = zoomLevel;
+                map.setZoom(zoomLevel);
+            });
+            function placeMarker(location) {
+                if (marker) {
+                    marker.setPosition(location);
+                } else {
+                    marker = new google.maps.Marker({
+                        position: location,
+                        map: map
+                    });
+                }
+            }
+            google.maps.event.addListener(map, 'click', function (event) {
+                placeMarker(event.latLng);
+            });
+            var latlng = google.maps.event.addDomListener(map, 'click', function (event) {
+                var lat = event.latLng.lat();
+                var lng = event.latLng.lng();
+                var latlng = [lat, lng];
+                document.getElementById("latitude").value = lat;
+                document.getElementById("longitude").value = lng;
+                //alert("Latitude: " + event.latLng.lat() + " " + ", longitude: " + event.latLng.lng());
+                return latlng;
+                @*@Html.HiddenFor(m => m.CurrentVenue.Latitude, new { id = "Latitude", @value = latlng })*@
+
+                // need to fix this
+
+            });
+                        
+        }
+        window.onload = function () { initialize() };
+    </script>
+    <style>
+        div#gmap {
+            width: 40%;
+            height: 500px;
+            border: double;
         }
     </style>
 </head>
+
 <body>
-    <h3>My Google Maps Demo</h3>
-    <div id="map"></div>
-    <script>
-        function initMap() {
-            var uluru = { lat: -25.363, lng: 131.044 };
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 4,
-                center: uluru
-            });
-            var marker = new google.maps.Marker({
-                position: uluru,
-                map: map
-            });
-        }
-    </script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
-    </script>
+    <form id="form1" runat="server">
+        <center>
+            <!-- MAP HOLDER -->
+            <div id="gmap"></div>
+
+
+        </center>
+
+    </form>
 </body>
+
 </html>
-
-@*<!DOCTYPE html>
-
-        <html xmlns="http://www.w3.org/1999/xhtml">
-        <head runat="server">
-            <title>Show Google Map with Latitude and Longitude in asp.net website</title>
-            <style type="text/css">
-                html {
-                    height: 100%;
-                }
-                body {
-                    height: 100%;
-                    margin: 0;
-                    padding: 0;
-                    vertical-align: top
-                }
-                #map_canvas {
-                    height: 100%;
-                }
-            </style>
-            <script type="text/javascript"
-                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6v5-2uaq_wusHDktM9ILcqIrlPtnZgEk&sensor=false">
-            </script>
-            <script type="text/javascript">
-
-                function initialize() {
-                    var myLatlng = new google.maps.LatLng(43.038902, -87.906471);
-                    var myOptions = {
-                        zoom: 7,
-                        center: myLatlng,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    }
-                    map = new google.maps.Map(document.getElementById("gmap"), myOptions);
-                    var marker = new google.maps.Marker({map: map});
-                    // if center changed then update lat and lon document objects
-                    //google.maps.event.addListener(map, 'center_changed', function () {
-                    //    var location = map.getCenter();
-                    //    document.getElementById("lat").innerHTML = location.lat();
-
-                    //    document.getElementById("lon").innerHTML = location.lng();
-                    //    // call function to reposition marker location
-                    //    placeMarker(location);
-                    //});
-                    // if zoom changed, then update document object with new info
-                    //google.maps.event.addListener(map, 'zoom_changed', function () {
-                    //    zoomLevel = map.getZoom();
-                    //    document.getElementById("zoom_level").innerHTML = zoomLevel;
-                    //});
-                    // double click on the marker changes zoom level
-                    google.maps.event.addListener(marker, 'dblclick', function () {
-                        zoomLevel = map.getZoom() + 1;
-                        if (zoomLevel == 20) {
-                            zoomLevel = 10;
-                        }
-                        document.getElementById("zoom_level").innerHTML = zoomLevel;
-                        map.setZoom(zoomLevel);
-                    });
-                    function placeMarker(location) {
-                        if (marker) {
-                            marker.setPosition(location);
-                        } else {
-                            marker = new google.maps.Marker({
-                                position: location,
-                                map: map,
-                            });
-                            return marker;
-                        }
-                    }
-
-                    google.maps.event.addListener(map, 'click', function (event) {
-                        placeMarker(event.latLng);
-                    });
-                    function bindInfoWindow(marker, map, Latitude, html) {
-                        google.maps.event.addListener(marker, 'click', function () {
-                            document.getElementById(event.latLng.lat()).innerHTML = html;
-                        });
-                    }
-                    google.maps.event.addListener(map, 'click', function (event) {
-                        document.getElementById('latlongclicked').value = event.latLng.lat()
-                        document.getElementById('lotlongclicked').value = event.latLng.lng()
-                    });
-                    var latlng = google.maps.event.addDomListener(map, 'click', function (event) {
-                        latJSON = JSON.stringify(event.latLng.lng());
-                        var lat = event.latLng.lat();
-                        document.getElementById('Latitude') = lat;
-                        return lat;
-                        var long = event.latlng.lng();
-                        return long;
-                        document.getElementById('Longitude') = long;
-                        alert("Latitude: " + event.latLng.lat() + " " + ", longitude: " + event.latLng.lng());
-                    });
-                }
-                window.onload = function () { initialize() };
-
-            </script>
-
-        </head>
-
-        <body>
-            <form id="form1" runat="server">
-                <center>
-                    <!-- MAP HOLDER -->
-                    <div id="gmap"></div>
-                    <!-- REFERENCES -->
-                    lat:
-                    lon:
-
-                </center>
-
-            </form>
-        </body>
-
-    </html>*@
+}

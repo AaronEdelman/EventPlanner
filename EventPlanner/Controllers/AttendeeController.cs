@@ -327,7 +327,6 @@ namespace EventPlanner.Controllers
                     return RedirectToAction("Index");
                 }
             }
-
             return View(model);
         }
     }
