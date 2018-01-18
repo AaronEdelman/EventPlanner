@@ -221,6 +221,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddEventToGroupViewModel.cs" />
     <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\AttendeeVote.cs" />
     <Compile Include="Models\CreateEntertainmentViewModel.cs" />
     <Compile Include="Models\CreateVenueViewModel.cs" />
     <Compile Include="Models\DeleteGroupViewModel.cs" />
@@ -239,6 +240,7 @@
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\OrganizeSchedule.cs" />
     <Compile Include="Models\UserToGroup.cs" />
     <Compile Include="Models\Venue.cs" />
     <Compile Include="Models\ViewVenuesViewModel.cs" />
@@ -258,6 +260,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\eventInvisBg.png" />
     <Content Include="Images\favicon.ico" />
+    <Content Include="Images\homeBg.jpg" />
     <Content Include="Images\logo2.png" />
     <Content Include="Images\violetNightSkty.jpg" />
     <Content Include="Scripts\bootstrap.js" />

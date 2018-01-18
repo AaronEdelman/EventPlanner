@@ -10,8 +10,7 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>UserToGroup</h4>
+    <div class="form-horizontal" style="color:#ffffff">
         <hr />
         @Html.HiddenFor(m => m.CurrentUserId)
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })

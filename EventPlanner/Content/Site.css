@@ -31,3 +31,25 @@ textarea {
 {
     background-color: #98878F
 }
+h2 {
+    color: #ffffff;
+    text-decoration: underline;
+}
+p{
+    color: #ffffff
+}
+h3{
+    color: #ffffff;
+}
+h1 {
+    color: #ffffff;
+}
+address {
+    color: #ffffff
+}
+h4 {
+    color: #ffffff
+}
+.form {
+    background-color: #192231;
+}

@@ -4,26 +4,29 @@
 }
 <head>
     <style>
-
-        p {
+        h3{
             text-indent: 50px;
+        }
+        p {
+            text-indent: 100px;
         }
     </style>
 </head>
 
-<h2>View Venues</h2>
+<h2>Your Venues</h2>
 
-<table class="table">
+<table class="table" style="color:#ffffff;">
     @foreach (var venue in Model.UserVenues)
     {
         <tr>
             <th>
-                <label> @venue.Name </label>
+                <h2> @venue.Name: </h2>
+                <h3>Shows: </h3>
                 @foreach (var entertainment in Model.UserEntertainment)
                 {
                     if (entertainment.VenueId == venue.Id)
                     {
-                        <p> @entertainment.Name</p>
+                        <p> - @entertainment.Name</p>
                     }
                 }
             </th>

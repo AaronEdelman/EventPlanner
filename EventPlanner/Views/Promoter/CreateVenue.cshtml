@@ -7,8 +7,8 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Venue</h4>
+    <div class="form-horizontal" style="color:#ffffff;">
+        <h4> Create Venue</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -47,7 +47,7 @@
             @Html.HiddenFor(m => m.CurrentVenue.Longitude, new { @id = "longitude"})
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-5">
-                    <input type="submit" value="CreateVenue" class="btn btn-default" label="CreateVenue" />
+                    <input type="submit" value="Create Venue" class="btn btn-default" label="CreateVenue" />
                 </div>
             </div>
         </div>

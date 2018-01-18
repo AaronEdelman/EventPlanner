@@ -1,18 +1,17 @@
 ﻿body {
     margin: 0;
     padding: 0;
-    background-color: #393c52
+    background-image: url(../Images/violetNightSkty.jpg);
 }
 
-.menu-icon
-{
+.menu-icon {
     position: fixed;
     top: 20px;
     right: 20px;
     width: 50px;
-    height:44px;
-    padding:  4px 8px;
-    background: #000000;
+    height: 44px;
+    padding: 4px 8px;
+    background: #192231;
     box-sizing: border-box;
     cursor: pointer;
 }
@@ -33,7 +32,7 @@
     right: -300px;
     width: 300px;
     height: 100vh;
-    background: #000000;
+    background: #192231;
     padding: 20px;
     text-align: center;
     box-sizing: border-box;
@@ -68,7 +67,7 @@
 }
 .sidebar .menu li a:hover
 {
-    background: #fc2827;
+    background: #985E6D;
     color: #fff;
 }
 .menu-icon.active 
@@ -128,5 +127,5 @@
 }
 .social-icon li a:hover
 {
-    background-color: #fc2827;
+    background-color: #985E6D;
 }

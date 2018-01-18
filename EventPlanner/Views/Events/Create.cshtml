@@ -4,8 +4,8 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
-
+<h2  style="color:#ffffff;">Create</h2>
+<div  style="color:#ffffff;">
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
@@ -118,6 +118,8 @@
     </div>
 }
 
+
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+    </div>

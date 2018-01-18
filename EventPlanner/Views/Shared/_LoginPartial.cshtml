@@ -8,7 +8,6 @@
         <li>
             @Html.ActionLink("My Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
-        <li>@Html.ActionLink("My Info", "Index", "Users")</li>
         if (User.IsInRole("Promoter"))
         {
             <li>@Html.ActionLink("My Events", "Events", "Promoter")</li>

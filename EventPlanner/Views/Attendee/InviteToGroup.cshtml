@@ -3,10 +3,11 @@
     ViewBag.Title = "InviteToGroup";
 }
 
-<h2>InviteToGroup</h2>
+<h2>Invite Someone To Your Group!</h2>
 
-<h3>Please Input the email address of any registered user you would like to invite to the group.</h3>
-
+<h3 style="color:#ffffff">Please Input the email address of any registered user you would like to invite to the group.</h3>
+<br/>
+<div style="color:#ffffff">
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -30,4 +31,5 @@
         </div>
     </div>
 }
+    </div>
 

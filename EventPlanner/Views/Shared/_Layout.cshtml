@@ -5,9 +5,9 @@
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    <link rel="stylesheet" href="~/Content/MenuBar.css" type="text/css" media="screen" />
+    <title>EventPlanner - @ViewBag.Title</title>
+    @Styles.Render("~/Content/css?parameter=1")
+    <link rel="stylesheet" href="~/Content/MenuBar.css?parameter=1" type="text/css" media="screen" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <script type="text/javascript">
@@ -38,7 +38,7 @@
         <span></span>
     </div>
     <div class="sidebar">
-        <a href="#"><img src="~/Images/logo2.png" /></a>
+        <a href="#"><img src="~/Images/logo2.png" width="250" height="250"/></a>
         <ul class=" menu">
             <li>
                 @Html.ActionLink("Home","Index","Home")

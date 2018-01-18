@@ -329,5 +329,50 @@ namespace EventPlanner.Controllers
             }
             return View(model);
         }
+
+        //GET: /Attendee/Schedule
+        [HttpGet]
+        public ActionResult Schedule(int GroupId)
+        {
+
+            //Getting all entertainments for a certain group Id
+
+            GroupVoteViewModel votes = new GroupVoteViewModel();
+            votes.EntertainmentPreferences = new List<EntertainmentPreference>();
+            foreach (EntertainmentPreference vote in db.EntertainmentPreferences.Include(e => e.Entertainment))
+            {
+                if (vote.GroupId == GroupId)
+                {
+                    votes.EntertainmentPreferences.Add(vote);
+                }
+            }
+
+            //getting info out of model form and into objects that can be passed into an instantiated class
+
+            List<AttendeeVote> attendeeVotes = new List<AttendeeVote>();
+            foreach (EntertainmentPreference vote in votes.EntertainmentPreferences)
+            {
+                AttendeeVote attendeeVote = new AttendeeVote(vote.Entertainment.Name, vote.PreferenePoints);
+                attendeeVotes.Add(attendeeVote);
+            }
+            OrganizeSchedule organizeSchedule = new OrganizeSchedule(attendeeVotes);
+
+            List<AttendeeVote> orderedVotes = organizeSchedule.TabulateVotes();
+
+            //getting organized info out of objects and into model
+
+            VoteViewModel schedule = new VoteViewModel();
+            schedule.entertainments = new List<Entertainment>();
+            foreach (AttendeeVote vote in orderedVotes)
+            {
+                Entertainment preference = new Entertainment();
+                preference.Name = vote.show;
+                preference.VenueId = vote.points; //Once again, using venueId as a placeholder for points.  Sorry again. - Aaron
+                schedule.entertainments.Add(preference);
+            }
+
+            return View(schedule);
+        }
     }
 }
+
