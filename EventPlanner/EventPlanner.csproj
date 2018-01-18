@@ -348,6 +348,7 @@
     <Content Include="Views\Attendee\InviteToGroup.cshtml" />
     <Content Include="Views\Attendee\AddEventToGroup.cshtml" />
     <Content Include="Views\Attendee\Vote.cshtml" />
+    <Content Include="Views\Attendee\Schedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
