@@ -32,12 +32,13 @@
     </table>
 
     <table class="table">
-        @Html.ActionLink("Add", "AddEventToGroup", new { groupId = Model.Group.Id })
+        @Html.ActionLink("Add Event", "AddEventToGroup", new { groupId = Model.Group.Id })
         <thead>
             <tr>
                 <th>Event Name</th>
                 <th>Start Date</th>
                 <th>End Date</th>
+                <th>Price</th>
                 <th>Web Link</th>
             </tr>
         </thead>
@@ -55,9 +56,25 @@
                     @eve.EndDate
                 </td>
                 <td>
+                    @eve.Cost
+                </td>
+                <td>
                     @eve.Weblink
                 </td>
                 <td>@Html.ActionLink("Remove", "RemoveEventFromGroup", new { eventId = eve.Id, groupId = Model.Group.Id })</td>
+                <td>
+                    <form action=~/Attendee/Index method="POST">
+                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                            data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+                            data-amount= @eve.Cost
+                            data-name="Stripe.com"
+                            data-description="Widget"
+                            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                            data-locale="auto"
+                            data-zip-code="true">
+                    </script>
+                    </form>
+                </td>
             </tr>
         }
     </table>
